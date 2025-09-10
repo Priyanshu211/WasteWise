@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/common/page-header';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,14 +27,16 @@ import type { Worker } from '@/lib/types';
 import { Progress } from '@/components/ui/progress';
 
 export default function WorkersPage() {
-  // In a real app, this would be managed with a state management library or fetched from an API.
-  const [workers, setWorkers] = useState<Worker[]>(initialWorkers.map(w => ({
-      ...w,
-      // Adding dummy data for new fields
-      safetyGearIssued: Math.random() > 0.5,
-      attendance: Math.floor(Math.random() * 11) + 90, // 90-100%
-      status: Math.random() > 0.2 ? 'On-Duty' : 'Off-Duty',
-  })));
+  const [workers, setWorkers] = useState<Worker[]>(initialWorkers);
+  
+  useEffect(() => {
+    setWorkers(initialWorkers.map(w => ({
+        ...w,
+        safetyGearIssued: Math.random() > 0.5,
+        attendance: Math.floor(Math.random() * 11) + 90, // 90-100%
+        status: Math.random() > 0.2 ? 'On-Duty' : 'Off-Duty',
+    })));
+  }, []);
 
   const handleUpdateWorker = (updatedWorker: Worker) => {
     setWorkers(prevWorkers => 

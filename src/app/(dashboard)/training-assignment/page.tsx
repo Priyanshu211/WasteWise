@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { PageHeader } from '@/components/common/page-header';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -15,7 +15,7 @@ import { KpiCard } from '@/components/dashboard/kpi-card';
 import { trainingPrograms, workers as allWorkers } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 import { BookCheck, CheckCircle, Clock, Medal } from 'lucide-react';
-import type { Worker } from '@/lib/types';
+import type { Worker, TrainingProgram } from '@/lib/types';
 
 
 const assignedTrainings = [
@@ -26,10 +26,33 @@ const assignedTrainings = [
     { workerId: 'W001', programId: 'TP002', assignedDate: '2024-07-25', status: 'Ongoing' },
 ];
 
+interface ProgramWithProgress extends TrainingProgram {
+    completion?: number;
+}
+
+interface WorkerWithTrainings extends Worker {
+    trainingsCompleted?: number;
+}
+
 export default function TrainingAssignmentPage() {
     const [selectedProgramId, setSelectedProgramId] = useState<string | undefined>(trainingPrograms[0]?.id);
     const [selectedWorkerIds, setSelectedWorkerIds] = useState<string[]>([]);
     const { toast } = useToast();
+    const [programProgress, setProgramProgress] = useState<ProgramWithProgress[]>(trainingPrograms);
+    const [trainingLeaderboard, setTrainingLeaderboard] = useState<WorkerWithTrainings[]>([]);
+
+    useEffect(() => {
+        setProgramProgress(trainingPrograms.map(p => ({
+            ...p,
+            completion: Math.floor(Math.random() * 80) + 20, // Random completion %
+        })));
+
+        setTrainingLeaderboard(allWorkers.slice(0, 5).map(w => ({
+            ...w,
+            trainingsCompleted: Math.floor(Math.random() * 5) + 1
+        })).sort((a,b) => (b.trainingsCompleted ?? 0) - (a.trainingsCompleted ?? 0)));
+    }, []);
+
 
     const handleAssign = () => {
         if (!selectedProgramId || selectedWorkerIds.length === 0) {
@@ -40,7 +63,7 @@ export default function TrainingAssignmentPage() {
             });
             return;
         }
-        console.log(`Assigning program ${selectedProgramId} to workers:`, selectedWorkerIds);
+        
         toast({
             title: 'Training Assigned',
             description: `Successfully assigned the selected training to ${selectedWorkerIds.length} worker(s).`,
@@ -55,20 +78,6 @@ export default function TrainingAssignmentPage() {
                 : [...prev, workerId]
         );
     };
-
-    const programProgress = useMemo(() => {
-        return trainingPrograms.map(p => ({
-            ...p,
-            completion: Math.floor(Math.random() * 80) + 20, // Random completion %
-        }));
-    }, []);
-
-    const trainingLeaderboard = useMemo(() => {
-        return allWorkers.slice(0, 5).map(w => ({
-            ...w,
-            trainingsCompleted: Math.floor(Math.random() * 5) + 1
-        })).sort((a,b) => b.trainingsCompleted - a.trainingsCompleted);
-    }, []);
 
     return (
         <>
@@ -195,7 +204,7 @@ export default function TrainingAssignmentPage() {
                                 <div key={program.id}>
                                     <div className="flex justify-between items-center mb-1">
                                         <span className="text-sm font-medium">{program.name}</span>
-                                        <span className="text-sm text-muted-foreground">{program.completion}%</span>
+                                        <span className="text-sm text-muted-foreground">{program.completion || 0}%</span>
                                     </div>
                                     <Progress value={program.completion} className="h-2" />
                                 </div>
