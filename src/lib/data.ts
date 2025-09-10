@@ -202,4 +202,12 @@ export const trainingCompletionRates = [
     { name: 'Completed', value: 40, fill: 'var(--color-chart-1)' },
 ];
 
+export const facilityUtilization = [
+    { name: 'Okhla', utilization: 85 },
+    { name: 'Ghazipur', utilization: 70 },
+    { name: 'Chandigarh', utilization: 50 },
+    { name: 'Narela', utilization: 92 },
+    { name: 'Bawana', utilization: 60 },
+    { name: 'Mayapuri', utilization: 78 },
+];
 

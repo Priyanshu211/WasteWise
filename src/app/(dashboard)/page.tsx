@@ -8,7 +8,10 @@ import {
   Users,
   PieChart,
   BarChart,
-  GraduationCap
+  GraduationCap,
+  Building,
+  Wrench,
+  BarChart3,
 } from 'lucide-react';
 import { KpiCard } from '@/components/dashboard/kpi-card';
 import {
@@ -27,13 +30,15 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { complaints, workers } from '@/lib/data';
+import { complaints, workers, facilities } from '@/lib/data';
 import { PageHeader } from '@/components/common/page-header';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ComplaintsByMonthChart } from '@/components/dashboard/complaints-by-month-chart';
 import { WasteByZoneChart } from '@/components/dashboard/waste-by-zone-chart';
 import { TrainingCompletionChart } from '@/components/dashboard/training-completion-chart';
+import { FacilityUtilizationChart } from '@/components/dashboard/facility-utilization-chart';
 import { useComplaints } from '@/context/ComplaintsContext';
+import { useMemo } from 'react';
 
 export default function DashboardPage() {
     const { complaints } = useComplaints();
@@ -41,6 +46,20 @@ export default function DashboardPage() {
     const pendingComplaints = complaints.filter(c => c.status === 'Pending').length;
     const completedComplaints = complaints.filter(c => c.status === 'Completed').length;
     const activeWorkers = workers.length;
+
+    const facilityCounts = useMemo(() => {
+        return facilities.reduce((acc, facility) => {
+            if (!acc[facility.type]) {
+                acc[facility.type] = 0;
+            }
+            acc[facility.type]++;
+            return acc;
+        }, {} as Record<string, number>);
+    }, []);
+
+    const maintenanceFacilities = useMemo(() => {
+        return facilities.filter(f => f.status === 'Under Maintenance');
+    }, []);
 
   return (
     <>
@@ -96,6 +115,85 @@ export default function DashboardPage() {
             <CardContent>
                 <WasteByZoneChart />
             </CardContent>
+        </Card>
+      </div>
+
+       <div className="mb-6">
+        <Card>
+           <CardHeader>
+            <CardTitle className="flex items-center gap-2"><Building className="w-5 h-5" />Facility Overview</CardTitle>
+            <CardDescription>Summary of operational facilities.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+             <KpiCard
+                title="W-to-E Plants"
+                value={facilityCounts['W-to-E']?.toString() || '0'}
+                icon={Building}
+             />
+              <KpiCard
+                title="Biomethanization"
+                value={facilityCounts['Biomethanization']?.toString() || '0'}
+                icon={Building}
+             />
+              <KpiCard
+                title="Recycling Centers"
+                value={facilityCounts['Recycling Center']?.toString() || '0'}
+                icon={Building}
+             />
+             <KpiCard
+                title="Scrap Shops"
+                value={facilityCounts['Scrap Shop']?.toString() || '0'}
+                icon={Building}
+             />
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7 mb-6">
+         <Card className="lg:col-span-4">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><BarChart3 className="w-5 h-5" />Facility Capacity</CardTitle>
+            <CardDescription>
+              Current capacity utilization across active facilities.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FacilityUtilizationChart />
+          </CardContent>
+        </Card>
+        <Card className="lg:col-span-3">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><Wrench className="w-5 h-5" />Facilities Needing Maintenance</CardTitle>
+            <CardDescription>
+              Facilities currently marked as under maintenance.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+             <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Facility</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Location</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {maintenanceFacilities.length > 0 ? maintenanceFacilities.map((facility) => (
+                  <TableRow key={facility.id}>
+                    <TableCell className="font-medium">{facility.name}</TableCell>
+                    <TableCell>{facility.type}</TableCell>
+                    <TableCell>{facility.address}</TableCell>
+                  </TableRow>
+                )) : (
+                  <TableRow>
+                    <TableCell colSpan={3} className="h-24 text-center">
+                      No facilities are currently under maintenance.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
         </Card>
       </div>
       
@@ -162,4 +260,5 @@ export default function DashboardPage() {
     </>
   );
 }
+
 
