@@ -23,7 +23,7 @@ import { MoreVertical, PlusCircle, X, Edit, FileDown } from 'lucide-react';
 import { trainingPrograms as allPrograms } from '@/lib/data';
 import type { TrainingProgram } from '@/lib/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { AddEditTrainingProgramDialog } from '@/components/dashboard/add-edit-training-program-dialog';
 import { format, parseISO } from 'date-fns';
