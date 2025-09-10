@@ -30,6 +30,7 @@ export default function WorkersPage() {
   const [workers, setWorkers] = useState<Worker[]>(initialWorkers);
   
   useEffect(() => {
+    // Generate dynamic data only on the client-side to avoid hydration errors
     setWorkers(initialWorkers.map(w => ({
         ...w,
         safetyGearIssued: Math.random() > 0.5,
