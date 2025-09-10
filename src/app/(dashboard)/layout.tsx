@@ -7,7 +7,6 @@ import {
   BookOpenCheck,
   Building,
   FileText,
-  Home,
   LayoutDashboard,
   LineChart,
   Search,
@@ -17,7 +16,6 @@ import {
   Users,
   PanelLeft,
   ClipboardList,
-  PieChart,
   Package,
   ShieldAlert,
 } from 'lucide-react';
@@ -45,13 +43,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 import { ComplaintsProvider, useComplaints } from '@/context/ComplaintsContext';
 
 function DashboardNav() {
   const pathname = usePathname();
   const { complaints } = useComplaints();
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname.startsWith(href) && (href !== '/' || pathname === '/');
   const pendingComplaintsCount = complaints.filter(c => c.status === 'Pending').length;
 
   const navItems = [
@@ -67,6 +64,12 @@ function DashboardNav() {
     { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
     { href: '/settings', label: 'Settings', icon: Settings },
   ];
+  
+  const trainingSubNav = [
+    { href: '/training', label: 'Programs' },
+    { href: '/training-assignment', label: 'Assignment' },
+    { href: '/training-analytics', label: 'Analytics' },
+  ];
 
   return (
       <Sidebar>
@@ -79,7 +82,7 @@ function DashboardNav() {
         <SidebarContent>
           <SidebarMenu>
             {navItems.map((item) => (
-              <SidebarMenuItem key={item.label}>
+               <SidebarMenuItem key={item.label}>
                 <Link href={item.href}>
                   <SidebarMenuButton
                     isActive={isActive(item.href)}
@@ -93,6 +96,19 @@ function DashboardNav() {
                     )}
                   </SidebarMenuButton>
                 </Link>
+                {item.href === '/training' && pathname.startsWith('/training') && (
+                    <SidebarMenuSub>
+                       {trainingSubNav.map(subItem => (
+                         <SidebarMenuSubItem key={subItem.label}>
+                            <Link href={subItem.href} passHref>
+                                <SidebarMenuSubButton isActive={pathname === subItem.href}>
+                                    {subItem.label}
+                                </SidebarMenuSubButton>
+                            </Link>
+                         </SidebarMenuSubItem>
+                       ))}
+                    </SidebarMenuSub>
+                )}
               </SidebarMenuItem>
             ))}
           </SidebarMenu>

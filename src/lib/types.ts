@@ -61,6 +61,7 @@ export type TrainingProgram = {
   trainerName: string;
   startDate: string;
   endDate: string;
+  seatsFilled: number;
 };
 
 export type TrainingFeedback = {

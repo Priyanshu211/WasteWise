@@ -69,12 +69,13 @@ export default function TrainingPage() {
     setIsAddEditOpen(true);
   }
 
-  const handleSaveProgram = (programData: Omit<TrainingProgram, 'id'>, id?: string) => {
+  const handleSaveProgram = (programData: Omit<TrainingProgram, 'id' | 'seatsFilled'>, id?: string) => {
     if (id) {
-      setPrograms(programs.map(p => p.id === id ? { ...p, ...programData } : p));
+      setPrograms(programs.map(p => p.id === id ? { ...programs.find(p => p.id === id)!, ...programData } : p));
     } else {
       const newProgram: TrainingProgram = {
         id: `TP${Date.now().toString().slice(-4)}`,
+        seatsFilled: 0, // Default for new programs
         ...programData
       };
       setPrograms([newProgram, ...programs]);
@@ -157,8 +158,8 @@ export default function TrainingPage() {
               <TableRow>
                   <TableHead>Program Name</TableHead>
                   <TableHead>Audience</TableHead>
-                  <TableHead>Phase/Level</TableHead>
-                  <TableHead>Duration</TableHead>
+                  <TableHead>Seats Filled</TableHead>
+                  <TableHead>Trainer</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -168,8 +169,8 @@ export default function TrainingPage() {
                   <TableRow key={program.id}>
                   <TableCell className="font-medium">{program.name}</TableCell>
                   <TableCell>{program.audience}</TableCell>
-                  <TableCell>{program.phase}</TableCell>
-                  <TableCell>{program.duration}</TableCell>
+                  <TableCell>{program.seatsFilled}</TableCell>
+                  <TableCell>{program.trainerName}</TableCell>
                   <TableCell>
                       <Badge variant={getStatusBadgeVariant(program.status)} className={program.status === 'Active' ? 'bg-green-600' : ''}>
                       {program.status}
@@ -233,6 +234,7 @@ export default function TrainingPage() {
                 <p><strong>Status:</strong> {selectedProgram.status}</p>
                 <p><strong>Description:</strong> {selectedProgram.description}</p>
                 <p><strong>Trainer:</strong> {selectedProgram.trainerName}</p>
+                 <p><strong>Seats Filled:</strong> {selectedProgram.seatsFilled}</p>
                 <p><strong>Schedule:</strong> {format(parseISO(selectedProgram.startDate), 'PP')} to {format(parseISO(selectedProgram.endDate), 'PP')}</p>
             </div>
           )}

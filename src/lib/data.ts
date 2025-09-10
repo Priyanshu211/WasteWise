@@ -190,7 +190,8 @@ export const trainingPrograms: TrainingProgram[] = [
     description: 'Basic safety protocols for all new sanitation workers.',
     trainerName: 'Anil Kapoor',
     startDate: '2024-08-01',
-    endDate: '2024-08-03'
+    endDate: '2024-08-03',
+    seatsFilled: 45,
   },
   {
     id: 'TP002',
@@ -202,7 +203,8 @@ export const trainingPrograms: TrainingProgram[] = [
     description: 'Advanced course on identifying and safely handling hazardous materials.',
     trainerName: 'Priya Singh',
     startDate: '2024-08-05',
-    endDate: '2024-08-09'
+    endDate: '2024-08-09',
+    seatsFilled: 25,
   },
   {
     id: 'TP003',
@@ -214,7 +216,8 @@ export const trainingPrograms: TrainingProgram[] = [
     description: 'A webinar to educate citizens on proper recycling techniques.',
     trainerName: 'Ravi Kumar',
     startDate: '2024-08-15',
-    endDate: '2024-08-15'
+    endDate: '2024-08-15',
+    seatsFilled: 120,
   },
   {
     id: 'TP004',
@@ -226,7 +229,8 @@ export const trainingPrograms: TrainingProgram[] = [
     description: 'Training on daily checks and basic maintenance of waste collection vehicles.',
     trainerName: 'Sanjay Sharma',
     startDate: '2024-07-10',
-    endDate: '2024-07-11'
+    endDate: '2024-07-11',
+    seatsFilled: 50,
   }
 ];
 
