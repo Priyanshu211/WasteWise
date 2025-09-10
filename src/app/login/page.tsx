@@ -17,8 +17,6 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you'd handle Firebase Auth here.
-    // For this prototype, we'll just navigate to the dashboard.
     router.push('/');
   };
 

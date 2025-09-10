@@ -41,7 +41,6 @@ export default function TrainingAnalyticsPage() {
                         <CardDescription>Monthly enrollment in training programs.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {/* In a real app, this data would be fetched from Firestore/your database */}
                         <TrainingParticipationChart />
                     </CardContent>
                 </Card>
@@ -51,7 +50,6 @@ export default function TrainingAnalyticsPage() {
                         <CardDescription>Breakdown of completion rates by role.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                         {/* In a real app, this data would be aggregated via Cloud Functions */}
                         <TrainingCompletionByAudienceChart />
                     </CardContent>
                 </Card>
@@ -63,7 +61,6 @@ export default function TrainingAnalyticsPage() {
                     <CardDescription>Recent feedback submitted by training participants.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {/* In a real app, this data would be a paginated query to Firestore */}
                     <Table>
                         <TableHeader>
                             <TableRow>

@@ -94,9 +94,6 @@ export default function FacilitiesPage() {
   };
 
   const handleExport = (format: 'csv' | 'pdf') => {
-    // In a real application, this would trigger a call to a backend service or Cloud Function.
-    // The function would query Firestore for the facilities (filtered by `exportType`),
-    // generate the file, and provide a download link.
     console.log(`Exporting ${exportType} facilities as ${format}`);
     
     toast({
@@ -258,7 +255,7 @@ export default function FacilitiesPage() {
                         </div>
                         <h3 className="mt-4 text-lg font-semibold">Interactive Map Coming Soon</h3>
                         <p className="text-muted-foreground mt-2 max-w-md">
-                            This area will display an interactive map with facility locations. Integration with a mapping library like Leaflet or Google Maps is required.
+                            This area will display an interactive map with facility locations.
                         </p>
                     </div>
                 </CardContent>

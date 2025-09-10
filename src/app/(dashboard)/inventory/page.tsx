@@ -9,8 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { AlertCircle, FileDown, PlusCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-// Dummy data for inventory items
-// In a real app, this would be fetched from Firestore.
 const dummyInventory = [
   { id: 'ITM001', name: 'Large Dustbins (120L)', inStock: 1500, distributed: 8500 },
   { id: 'ITM002', name: 'Small Dustbins (60L)', inStock: 3200, distributed: 12800 },
@@ -27,8 +25,6 @@ export default function InventoryPage() {
   const { toast } = useToast();
 
   const handleAddItem = () => {
-    // This would open a dialog to add a new inventory item.
-    // For now, we'll just show a toast.
     toast({
       title: 'Feature Coming Soon',
       description: 'The ability to add new inventory items will be implemented shortly.',

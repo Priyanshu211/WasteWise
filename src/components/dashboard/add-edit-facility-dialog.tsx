@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -27,7 +28,6 @@ import { Upload } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
 
-// This schema defines the shape of our form data and provides validation rules.
 const facilitySchema = z.object({
   name: z.string().min(3, { message: 'Facility name must be at least 3 characters.' }),
   type: z.enum(['W-to-E', 'Biomethanization', 'Recycling Center', 'Scrap Shop']),
@@ -41,7 +41,7 @@ type FacilityFormValues = z.infer<typeof facilitySchema>;
 type AddEditFacilityDialogProps = {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  facility?: Facility; // The facility to edit, if any.
+  facility?: Facility;
   onSave: (data: FacilityFormValues, id?: string) => void;
 };
 
@@ -59,7 +59,6 @@ export function AddEditFacilityDialog({ isOpen, onOpenChange, facility, onSave }
     },
   });
 
-  // Reset the form when the 'facility' prop changes (e.g., when opening the dialog to edit a different facility).
   useEffect(() => {
     if (facility) {
       form.reset(facility);
@@ -75,8 +74,6 @@ export function AddEditFacilityDialog({ isOpen, onOpenChange, facility, onSave }
   }, [facility, form]);
 
   const onSubmit = (data: FacilityFormValues) => {
-    // In a real application, this is where you would make an API call to
-    // a Cloud Function or your backend to save the data to Firestore.
     console.log('Form data submitted:', data);
 
     onSave(data, facility?.id);
@@ -86,16 +83,12 @@ export function AddEditFacilityDialog({ isOpen, onOpenChange, facility, onSave }
       description: `The details for "${data.name}" have been saved successfully.`,
     });
 
-    onOpenChange(false); // Close the dialog on successful submission.
+    onOpenChange(false);
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // In a real application, you would upload this file to Firebase Storage.
-      // 1. Get a reference to a path in your storage bucket (e.g., `facilities/${facility.id || Date.now()}/${file.name}`).
-      // 2. Use the `uploadBytes` function from the Firebase SDK.
-      // 3. Once uploaded, get the `downloadURL` and save it in the facility's Firestore document.
       console.log('Simulating image upload:', file.name);
       toast({
         title: 'Image Selected',

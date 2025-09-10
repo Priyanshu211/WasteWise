@@ -19,7 +19,6 @@ import {
 import { FileDown, MoreVertical, Upload } from 'lucide-react';
 import { useEffect } from 'react';
 
-// Sample data for user management
 const admins = [
   { id: 'admin1', name: 'Super Admin', email: 'admin@wastewise.com', role: 'Super Admin', avatar: 'https://picsum.photos/seed/admin-avatar/40/40' },
   { id: 'admin2', name: 'Ravi Kumar', email: 'ravi.k@wastewise.com', role: 'Regional Admin (Delhi)', avatar: 'https://picsum.photos/seed/admin2/40/40' },
@@ -29,23 +28,14 @@ const admins = [
 export default function SettingsPage() {
   
   useEffect(() => {
-    // On mount, check for saved theme preference or use system preference
     const savedTheme = localStorage.getItem('theme') || 'system';
     handleThemeChange(savedTheme as 'light' | 'dark' | 'system');
   }, []);
 
-
-  // In a real application, these handlers would interact with a backend/Firebase.
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       console.log('Uploading file:', file.name);
-      // TODO: Implement Firebase Storage upload logic here.
-      // 1. Get a reference to Firebase Storage.
-      // 2. Create a storage reference (e.g., 'organization/logo.png').
-      // 3. Upload the file using `uploadBytes`.
-      // 4. Get the download URL using `getDownloadURL`.
-      // 5. Save the URL to Firestore in the organization settings document.
     }
   };
 
@@ -56,15 +46,11 @@ export default function SettingsPage() {
     } else {
       document.documentElement.classList.toggle('dark', theme === 'dark');
     }
-    // TODO: Save theme preference to localStorage and/or Firestore for persistence.
     localStorage.setItem('theme', theme);
   };
 
   const handleExport = (dataType: 'complaints' | 'workers' | 'leaderboard', format: 'csv' | 'pdf') => {
     console.log(`Exporting ${dataType} as ${format}`);
-    // TODO: Implement Cloud Function trigger here.
-    // This would typically involve making an HTTPS call to a Cloud Function endpoint,
-    // which would then generate the file and provide a download link.
   };
 
   return (
@@ -82,7 +68,6 @@ export default function SettingsPage() {
           <TabsTrigger value="export">Data Export</TabsTrigger>
         </TabsList>
 
-        {/* Organization Settings */}
         <TabsContent value="organization">
           <Card>
             <CardHeader>
@@ -90,7 +75,6 @@ export default function SettingsPage() {
               <CardDescription>Update your organization's name, logo, and contact information.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Firestore Security Rule Comment: Only users with 'Super Admin' role should be able to write to '/settings/organization'. */}
               <div className="space-y-2">
                 <Label htmlFor="org-name">Organization Name</Label>
                 <Input id="org-name" defaultValue="WasteWise" />
@@ -122,7 +106,6 @@ export default function SettingsPage() {
           </Card>
         </TabsContent>
 
-        {/* User & Role Management */}
         <TabsContent value="users">
           <Card>
             <CardHeader className="flex-row items-center justify-between">
@@ -133,7 +116,6 @@ export default function SettingsPage() {
                 <Button>Add New Admin</Button>
             </CardHeader>
             <CardContent>
-              {/* Firestore Security Rule Comment: Reading users should be restricted to admins. Updating/deleting users restricted to 'Super Admin'. */}
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -179,7 +161,6 @@ export default function SettingsPage() {
           </Card>
         </TabsContent>
 
-        {/* Notification Settings */}
         <TabsContent value="notifications">
           <Card>
             <CardHeader>
@@ -187,7 +168,6 @@ export default function SettingsPage() {
               <CardDescription>Choose which events trigger push notifications for admins.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Firestore Security Rule Comment: Users should only be able to update their own notification settings document (e.g., /users/{userId}/settings). */}
               <div className="flex items-center justify-between rounded-lg border p-4">
                 <div className="space-y-0.5">
                   <Label htmlFor="new-complaint" className="text-base">New Complaint Created</Label>
@@ -213,7 +193,6 @@ export default function SettingsPage() {
           </Card>
         </TabsContent>
 
-        {/* Theme Preferences */}
         <TabsContent value="theme">
           <Card>
             <CardHeader>
@@ -221,7 +200,6 @@ export default function SettingsPage() {
               <CardDescription>Customize the look and feel of the admin panel.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Firestore Security Rule Comment: Users should only be able to write to their own theme preference field in their user document. */}
               <p className="font-medium">Appearance</p>
               <div className="flex gap-4">
                 <Button variant="outline" onClick={() => handleThemeChange('light')}>Light</Button>
@@ -232,7 +210,6 @@ export default function SettingsPage() {
           </Card>
         </TabsContent>
 
-        {/* Data Export */}
         <TabsContent value="export">
           <Card>
             <CardHeader>
@@ -240,7 +217,6 @@ export default function SettingsPage() {
               <CardDescription>Export system data as CSV or PDF.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Firestore Security Rule Comment: Triggering exports should be restricted to users with 'Super Admin' role. */}
               <div className="flex flex-wrap items-center justify-between rounded-lg border p-4">
                 <p className="font-medium">All Complaints</p>
                 <div className="flex gap-2">

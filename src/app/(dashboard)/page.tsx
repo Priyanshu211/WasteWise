@@ -62,7 +62,6 @@ export default function DashboardPage() {
         return facilities.filter(f => f.status === 'Under Maintenance');
     }, []);
     
-    // Dummy data for new KPIs. In a real app, this would come from your database.
     const citizensTrained = 1256;
     const workersTrained = workers.filter(w => w.trainingPhase === 'Completed').length;
     const averageFacilityUtilization = 76;

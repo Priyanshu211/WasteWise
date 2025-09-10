@@ -18,7 +18,6 @@ import { BookCheck, CheckCircle, Clock, Medal } from 'lucide-react';
 import type { Worker } from '@/lib/types';
 
 
-// Dummy data for assigned trainings
 const assignedTrainings = [
     { workerId: 'W001', programId: 'TP001', assignedDate: '2024-07-20', status: 'Completed' },
     { workerId: 'W002', programId: 'TP002', assignedDate: '2024-07-21', status: 'In Progress' },
@@ -33,10 +32,6 @@ export default function TrainingAssignmentPage() {
     const { toast } = useToast();
 
     const handleAssign = () => {
-        // In a real application, this would trigger a Cloud Function or API call
-        // to save the assignments in Firestore.
-        // e.g., for each workerId in selectedWorkerIds, create a document in
-        // a `worker_trainings` collection with programId, status: 'Ongoing', etc.
         if (!selectedProgramId || selectedWorkerIds.length === 0) {
             toast({
                 title: 'Assignment Failed',
@@ -62,7 +57,6 @@ export default function TrainingAssignmentPage() {
     };
 
     const programProgress = useMemo(() => {
-        // Dummy data for progress. In a real app, this would be calculated from Firestore data.
         return trainingPrograms.map(p => ({
             ...p,
             completion: Math.floor(Math.random() * 80) + 20, // Random completion %
@@ -70,7 +64,6 @@ export default function TrainingAssignmentPage() {
     }, []);
 
     const trainingLeaderboard = useMemo(() => {
-         // Dummy data. In a real app, this would be aggregated via a Cloud Function.
         return allWorkers.slice(0, 5).map(w => ({
             ...w,
             trainingsCompleted: Math.floor(Math.random() * 5) + 1
@@ -92,7 +85,6 @@ export default function TrainingAssignmentPage() {
                         <CardDescription>Select a program and the workers to assign it to.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        {/* In a real app, trainingPrograms would be fetched from Firestore */}
                         <Select onValueChange={setSelectedProgramId} defaultValue={selectedProgramId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a training program" />
@@ -122,7 +114,6 @@ export default function TrainingAssignmentPage() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {/* In a real app, workers would be fetched from Firestore */}
                                     {allWorkers.map(worker => (
                                         <TableRow key={worker.workerId}>
                                             <TableCell>
@@ -162,7 +153,6 @@ export default function TrainingAssignmentPage() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {/* Dummy data. In a real app, this would be a Firestore query */}
                                     {assignedTrainings.map(assignment => {
                                         const worker = allWorkers.find(w => w.workerId === assignment.workerId);
                                         const program = trainingPrograms.find(p => p.id === assignment.programId);
@@ -189,7 +179,6 @@ export default function TrainingAssignmentPage() {
             <div className="mt-6">
                 <h2 className="text-2xl font-bold tracking-tight mb-4">Progress Tracker</h2>
                 <div className="grid gap-4 md:grid-cols-3 mb-6">
-                    {/* In a real app, these numbers would come from Firestore aggregations */}
                     <KpiCard title="Total Assigned" value="150" icon={BookCheck} />
                     <KpiCard title="Ongoing" value="85" icon={Clock} />
                     <KpiCard title="Completed" value="65" icon={CheckCircle} />

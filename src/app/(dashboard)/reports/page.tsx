@@ -24,21 +24,17 @@ type SortKey = 'name' | 'tasksCompleted' | 'performance';
 type SortDirection = 'asc' | 'desc';
 
 export default function ReportsPage() {
-  // State for Complaints Report
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
 
-  // State for Worker Performance Report
   const [sortBy, setSortBy] = useState<SortKey>('performance');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedWorker, setSelectedWorker] = useState<Worker | null>(null);
 
-  // State for Training Progress Report
   const [moduleFilter, setModuleFilter] = useState('all');
 
-  // Memoized logic for Complaints Report
   const filteredComplaints = useMemo(() => {
     return allComplaints
       .filter((complaint) => {
@@ -63,7 +59,6 @@ export default function ReportsPage() {
 
   const totalPages = Math.ceil(filteredComplaints.length / ITEMS_PER_PAGE);
 
-  // Memoized logic for Worker Performance Report
   const sortedWorkers = useMemo(() => {
     return [...allWorkers].sort((a, b) => {
       if (a[sortBy] < b[sortBy]) return sortDirection === 'asc' ? -1 : 1;
@@ -72,9 +67,7 @@ export default function ReportsPage() {
     });
   }, [sortBy, sortDirection]);
 
-  // Memoized logic for Training Progress Report
   const filteredTrainingProgress = useMemo(() => {
-    // In a real application, you would fetch and filter this from Firestore.
     if (moduleFilter === 'all') return allTrainingProgress;
     return allTrainingProgress.filter(p => p.module === moduleFilter);
   }, [moduleFilter]);
@@ -300,7 +293,6 @@ export default function ReportsPage() {
             </CardHeader>
             <CardContent>
                 <div className="mb-4">
-                    {/* In a real app, this filter would trigger a new query to Firestore */}
                     <Select value={moduleFilter} onValueChange={setModuleFilter}>
                         <SelectTrigger className="w-[240px]">
                             <SelectValue placeholder="Filter by module..." />
@@ -379,7 +371,6 @@ export default function ReportsPage() {
                 <DialogTitle>Work History: {selectedWorker?.name}</DialogTitle>
                 <DialogDescription>
                     A summary of recent tasks and performance metrics.
-                    {/* In a real app, this data would be fetched from Firestore, possibly via a Cloud Function. */}
                 </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">

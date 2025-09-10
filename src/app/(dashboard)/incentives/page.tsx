@@ -11,8 +11,6 @@ import { Input } from '@/components/ui/input';
 import { Search, ShieldAlert, Trophy, X, FileDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-// Dummy data for incentives and penalties
-// In a real app, this would be fetched from Firestore, likely from a collection of `buildings` or `generators`.
 const dummyComplianceData = [
   { id: 'BG001', name: 'Elante Mall', type: 'Commercial', compliance: 95, points: 500, penalties: 0 },
   { id: 'BG002', name: 'DLF IT Park', type: 'Commercial', compliance: 82, points: 250, penalties: 1 },
@@ -45,8 +43,6 @@ export default function IncentivesPage() {
       });
   }, [complianceData, typeFilter, searchTerm]);
 
-  // In a real application, these functions would trigger a Cloud Function
-  // to update the corresponding document in Firestore.
   const handleAwardIncentive = (id: string, name: string) => {
     console.log(`Awarding incentive to ${id}`);
     toast({

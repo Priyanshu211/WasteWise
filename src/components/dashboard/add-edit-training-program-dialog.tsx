@@ -56,7 +56,6 @@ export function AddEditTrainingProgramDialog({ isOpen, onOpenChange, program, on
 
   const form = useForm<ProgramFormValues>({
     resolver: zodResolver(programSchema),
-    // Set default values from the program prop if it exists (for editing)
     defaultValues: program || {
       name: '',
       audience: 'Workers',
@@ -70,7 +69,6 @@ export function AddEditTrainingProgramDialog({ isOpen, onOpenChange, program, on
     },
   });
 
-  // Reset the form when the dialog opens or the program prop changes.
   useEffect(() => {
     if (program) {
       form.reset(program);
@@ -90,8 +88,6 @@ export function AddEditTrainingProgramDialog({ isOpen, onOpenChange, program, on
   }, [program, form, isOpen]);
 
   const onSubmit = (data: ProgramFormValues) => {
-    // In a real application, you would call a Cloud Function or your backend
-    // to save this data to Firestore.
     console.log('Form data submitted:', data);
     
     onSave(data, program?.id);
@@ -107,9 +103,6 @@ export function AddEditTrainingProgramDialog({ isOpen, onOpenChange, program, on
   const handleMaterialUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // In a real app, upload this file to Firebase Storage.
-      // e.g., storageRef = ref(storage, `training-materials/${program.id}/${file.name}`)
-      // uploadBytes(storageRef, file).then(...)
       console.log('Simulating material upload:', file.name);
       toast({
         title: 'Material Selected',

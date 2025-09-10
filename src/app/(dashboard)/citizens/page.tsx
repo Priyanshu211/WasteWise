@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Check, X, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
-// In a real application, this data would be fetched from Firestore
 const dummyCitizens = [
   { id: 'CZ001', name: 'Aarav Sharma', ward: 'Ward 5', training: 'Completed', dustbin: true, compost: true, avatar: 'https://picsum.photos/seed/citizen1/40/40' },
   { id: 'CZ002', name: 'Diya Gupta', ward: 'Ward 12', training: 'Not Started', dustbin: false, compost: false, avatar: 'https://picsum.photos/seed/citizen2/40/40' },

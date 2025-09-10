@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -56,7 +57,7 @@ export function WorkerOptimizer() {
       console.error('Error optimizing assignments:', error);
       toast({
         title: 'Optimization Failed',
-        description: 'Could not get suggestions from the AI. Please try again.',
+        description: 'Could not get suggestions. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -82,10 +83,10 @@ export function WorkerOptimizer() {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Bot className="h-6 w-6" />
-            AI Worker Assignment Optimizer
+            Worker Assignment Optimizer
           </DialogTitle>
           <DialogDescription>
-            Describe the work order and let AI suggest the most efficient worker assignments.
+            Describe the work order and get suggestions for the most efficient worker assignments.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
@@ -124,7 +125,7 @@ export function WorkerOptimizer() {
               )}
               {!isLoading && !result && (
                 <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-                  AI suggestions will appear here.
+                  Suggestions will appear here.
                 </div>
               )}
               {result && result.suggestedAssignments.map(assignment => {
