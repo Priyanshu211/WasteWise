@@ -1,3 +1,5 @@
+
+'use client';
 import { PageHeader } from '@/components/common/page-header';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,22 +17,23 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, FileDown } from 'lucide-react';
+import { FileDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { complaints } from '@/lib/data';
+import { complaints as initialComplaints } from '@/lib/data';
 import { format, parseISO } from 'date-fns';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useState } from 'react';
+import type { Complaint } from '@/lib/types';
+import { ComplaintActions } from '@/components/dashboard/complaint-actions';
 
 
 export default function ComplaintsPage() {
-    
+    const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
+
+    const handleUpdateComplaint = (updatedComplaint: Complaint) => {
+        setComplaints(prevComplaints => prevComplaints.map(c => c.id === updatedComplaint.id ? updatedComplaint : c));
+    };
+
     const getStatusBadgeVariant = (status: string) => {
         switch (status) {
             case 'Completed':
@@ -109,24 +112,7 @@ export default function ComplaintsPage() {
                         {format(parseISO(complaint.createdAt), 'PPp')}
                     </TableCell>
                     <TableCell>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                                >
-                                <MoreHorizontal className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>View Details</DropdownMenuItem>
-                                <DropdownMenuItem>Assign Worker</DropdownMenuItem>
-                                <DropdownMenuItem>Mark as Completed</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <ComplaintActions complaint={complaint} onUpdate={handleUpdateComplaint} />
                     </TableCell>
                 </TableRow>
               ))}
