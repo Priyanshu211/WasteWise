@@ -1,3 +1,4 @@
+
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -41,14 +42,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { complaints } from '@/lib/data';
+import { ComplaintsProvider, useComplaints } from '@/context/ComplaintsContext';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function DashboardNav() {
   const pathname = usePathname();
+  const { complaints } = useComplaints();
   const isActive = (href: string) => pathname === href;
   const pendingComplaintsCount = complaints.filter(c => c.status === 'Pending').length;
 
@@ -138,5 +136,17 @@ export default function DashboardLayout({
         <main className="flex-1 p-4 sm:p-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
+  )
+}
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <ComplaintsProvider>
+      <DashboardNav>{children}</DashboardNav>
+    </ComplaintsProvider>
   );
 }

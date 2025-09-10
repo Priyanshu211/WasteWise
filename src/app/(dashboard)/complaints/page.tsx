@@ -19,20 +19,14 @@ import {
 } from '@/components/ui/table';
 import { FileDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { complaints as initialComplaints } from '@/lib/data';
 import { format, parseISO } from 'date-fns';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useState } from 'react';
-import type { Complaint } from '@/lib/types';
 import { ComplaintActions } from '@/components/dashboard/complaint-actions';
+import { useComplaints } from '@/context/ComplaintsContext';
 
 
 export default function ComplaintsPage() {
-    const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
-
-    const handleUpdateComplaint = (updatedComplaint: Complaint) => {
-        setComplaints(prevComplaints => prevComplaints.map(c => c.id === updatedComplaint.id ? updatedComplaint : c));
-    };
+    const { complaints, updateComplaint } = useComplaints();
 
     const getStatusBadgeVariant = (status: string) => {
         switch (status) {
@@ -112,7 +106,7 @@ export default function ComplaintsPage() {
                         {format(parseISO(complaint.createdAt), 'PPp')}
                     </TableCell>
                     <TableCell>
-                        <ComplaintActions complaint={complaint} onUpdate={handleUpdateComplaint} />
+                        <ComplaintActions complaint={complaint} onUpdate={updateComplaint} />
                     </TableCell>
                 </TableRow>
               ))}
