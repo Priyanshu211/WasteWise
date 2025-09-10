@@ -35,16 +35,20 @@ interface WorkerWithTrainings extends Worker {
 }
 
 export default function TrainingAssignmentPage() {
-    const [selectedProgramId, setSelectedProgramId] = useState<string | undefined>(trainingPrograms[0]?.id);
+    const [selectedProgramId, setSelectedProgramId] = useState<string | undefined>(undefined);
     const [selectedWorkerIds, setSelectedWorkerIds] = useState<string[]>([]);
     const { toast } = useToast();
-    const [programProgress, setProgramProgress] = useState<ProgramWithProgress[]>(trainingPrograms);
+    const [programProgress, setProgramProgress] = useState<ProgramWithProgress[]>([]);
     const [trainingLeaderboard, setTrainingLeaderboard] = useState<WorkerWithTrainings[]>([]);
 
     useEffect(() => {
+        if (trainingPrograms.length > 0) {
+            setSelectedProgramId(trainingPrograms[0].id);
+        }
+
         setProgramProgress(trainingPrograms.map(p => ({
             ...p,
-            completion: Math.floor(Math.random() * 80) + 20, // Random completion %
+            completion: Math.floor(Math.random() * 80) + 20,
         })));
 
         setTrainingLeaderboard(allWorkers.slice(0, 5).map(w => ({
@@ -68,7 +72,7 @@ export default function TrainingAssignmentPage() {
             title: 'Training Assigned',
             description: `Successfully assigned the selected training to ${selectedWorkerIds.length} worker(s).`,
         });
-        setSelectedWorkerIds([]); // Reset selection
+        setSelectedWorkerIds([]);
     };
 
     const toggleWorkerSelection = (workerId: string) => {
@@ -87,14 +91,13 @@ export default function TrainingAssignmentPage() {
             />
 
             <div className="grid gap-6 lg:grid-cols-2">
-                {/* Assign Training Section */}
                 <Card>
                     <CardHeader>
                         <CardTitle>Assign Training Program</CardTitle>
                         <CardDescription>Select a program and the workers to assign it to.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <Select onValueChange={setSelectedProgramId} defaultValue={selectedProgramId}>
+                        <Select onValueChange={setSelectedProgramId} value={selectedProgramId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a training program" />
                             </SelectTrigger>
@@ -145,7 +148,6 @@ export default function TrainingAssignmentPage() {
                     </CardContent>
                 </Card>
 
-                {/* Assigned Trainings Table */}
                 <Card>
                     <CardHeader>
                         <CardTitle>Current Assignments</CardTitle>
@@ -184,7 +186,6 @@ export default function TrainingAssignmentPage() {
                 </Card>
             </div>
 
-            {/* Progress Tracker Section */}
             <div className="mt-6">
                 <h2 className="text-2xl font-bold tracking-tight mb-4">Progress Tracker</h2>
                 <div className="grid gap-4 md:grid-cols-3 mb-6">
