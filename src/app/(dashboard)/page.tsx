@@ -12,6 +12,7 @@ import {
   Building,
   Wrench,
   BarChart3,
+  Percent,
 } from 'lucide-react';
 import { KpiCard } from '@/components/dashboard/kpi-card';
 import {
@@ -43,8 +44,8 @@ import { useMemo } from 'react';
 export default function DashboardPage() {
     const { complaints } = useComplaints();
     const totalComplaints = complaints.length;
-    const pendingComplaints = complaints.filter(c => c.status === 'Pending').length;
-    const completedComplaints = complaints.filter(c => c.status === 'Completed').length;
+    const openComplaints = complaints.filter(c => c.status !== 'Completed').length;
+    const resolvedComplaints = complaints.filter(c => c.status === 'Completed').length;
     const activeWorkers = workers.length;
 
     const facilityCounts = useMemo(() => {
@@ -60,40 +61,41 @@ export default function DashboardPage() {
     const maintenanceFacilities = useMemo(() => {
         return facilities.filter(f => f.status === 'Under Maintenance');
     }, []);
+    
+    // Dummy data for new KPIs. In a real app, this would come from your database.
+    const citizensTrained = 1256;
+    const workersTrained = workers.filter(w => w.trainingPhase === 'Completed').length;
+    const averageFacilityUtilization = 76;
+
 
   return (
     <>
       <PageHeader
-        title="Dashboard"
+        title="Dashboard Overview"
         description="Here's a snapshot of the waste management system."
       />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         <KpiCard
-          title="Total Complaints"
-          value={totalComplaints.toString()}
+          title="Open Complaints"
+          value={openComplaints.toString()}
           icon={AlertCircle}
-          change="5.2%"
-          changeType="increase"
+          change={`${resolvedComplaints} resolved`}
         />
         <KpiCard
-          title="Pending"
-          value={pendingComplaints.toString()}
-          icon={Activity}
-          change="1.2%"
-          changeType="decrease"
+          title="Citizens Trained"
+          value={citizensTrained.toString()}
+          icon={GraduationCap}
         />
         <KpiCard
-          title="Completed"
-          value={completedComplaints.toString()}
-          icon={CheckCircle2}
-          change="12.1%"
-          changeType="increase"
-        />
-        <KpiCard
-          title="Active Workers"
-          value={activeWorkers.toString()}
+          title="Waste Workers Trained"
+          value={workersTrained.toString()}
           icon={Users}
+        />
+        <KpiCard
+          title="Facility Utilization"
+          value={`${averageFacilityUtilization}%`}
+          icon={Percent}
         />
       </div>
 
@@ -260,5 +262,3 @@ export default function DashboardPage() {
     </>
   );
 }
-
-

@@ -12,6 +12,9 @@ export type Worker = {
     lng: number;
   };
   skills: string[];
+  safetyGearIssued?: boolean;
+  attendance?: number;
+  status?: 'On-Duty' | 'Off-Duty';
 };
 
 export type Complaint = {

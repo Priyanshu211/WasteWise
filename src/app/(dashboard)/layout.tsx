@@ -18,6 +18,8 @@ import {
   PanelLeft,
   ClipboardList,
   PieChart,
+  Package,
+  ShieldAlert,
 } from 'lucide-react';
 
 import {
@@ -55,13 +57,14 @@ function DashboardNav() {
   const navItems = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/complaints', label: 'Complaints', icon: FileText, badge: pendingComplaintsCount > 0 ? pendingComplaintsCount : undefined },
-    { href: '/workers', label: 'Workers', icon: Users },
-    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-    { href: '/training', label: 'Training', icon: BookOpenCheck },
-    { href: '/training-assignment', label: 'Training Assignment', icon: ClipboardList },
-    { href: '/training-analytics', label: 'Training Analytics', icon: PieChart },
+    { href: '/citizens', label: 'Citizens', icon: Users },
+    { href: '/workers', label: 'Waste Workers', icon: Users },
     { href: '/facilities', label: 'Facilities', icon: Building },
     { href: '/reports', label: 'Reports', icon: LineChart },
+    { href: '/inventory', label: 'Inventory', icon: Package },
+    { href: '/training', label: 'Training', icon: BookOpenCheck },
+    { href: '/incentives', label: 'Incentives & Penalties', icon: ShieldAlert },
+    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
     { href: '/settings', label: 'Settings', icon: Settings },
   ];
 

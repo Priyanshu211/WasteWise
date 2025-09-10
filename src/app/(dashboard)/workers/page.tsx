@@ -18,26 +18,23 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Check, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { workers as initialWorkers } from '@/lib/data';
 import { WorkerOptimizer } from '@/components/dashboard/worker-optimizer';
 import { WorkerActions } from '@/components/dashboard/worker-actions';
 import type { Worker } from '@/lib/types';
+import { Progress } from '@/components/ui/progress';
 
 export default function WorkersPage() {
-  const [workers, setWorkers] = useState<Worker[]>(initialWorkers);
-
-  const getTrainingBadgeVariant = (phase: string) => {
-    switch (phase) {
-      case 'Completed':
-        return 'default';
-      case 'Phase 2':
-        return 'secondary';
-      default:
-        return 'outline';
-    }
-  };
+  // In a real app, this would be managed with a state management library or fetched from an API.
+  const [workers, setWorkers] = useState<Worker[]>(initialWorkers.map(w => ({
+      ...w,
+      // Adding dummy data for new fields
+      safetyGearIssued: Math.random() > 0.5,
+      attendance: Math.floor(Math.random() * 11) + 90, // 90-100%
+      status: Math.random() > 0.2 ? 'On-Duty' : 'Off-Duty',
+  })));
 
   const handleUpdateWorker = (updatedWorker: Worker) => {
     setWorkers(prevWorkers => 
@@ -53,7 +50,7 @@ export default function WorkersPage() {
   return (
     <>
       <PageHeader
-        title="Worker Management"
+        title="Waste Worker Management"
         description="Manage worker profiles, track training, and view performance."
       >
         <WorkerOptimizer />
@@ -72,10 +69,11 @@ export default function WorkersPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead className="hidden md:table-cell">Area</TableHead>
-                <TableHead>Training</TableHead>
-                <TableHead className="hidden md:table-cell">Tasks Completed</TableHead>
-                <TableHead>Performance</TableHead>
+                <TableHead>Zone</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Training Completion</TableHead>
+                <TableHead>Safety Gear</TableHead>
+                <TableHead>Attendance</TableHead>
                 <TableHead>
                   <span className="sr-only">Actions</span>
                 </TableHead>
@@ -85,14 +83,22 @@ export default function WorkersPage() {
               {workers.map((worker) => (
                 <TableRow key={worker.workerId}>
                   <TableCell className="font-medium">{worker.name}</TableCell>
-                  <TableCell className="hidden md:table-cell">{worker.area}</TableCell>
-                  <TableCell>
-                    <Badge variant={getTrainingBadgeVariant(worker.trainingPhase)} className={worker.trainingPhase === 'Completed' ? 'bg-green-600' : ''}>
-                      {worker.trainingPhase}
+                  <TableCell>{worker.area}</TableCell>
+                   <TableCell>
+                    <Badge variant={worker.status === 'On-Duty' ? 'default' : 'outline'} className={worker.status === 'On-Duty' ? 'bg-green-600' : ''}>
+                      {worker.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">{worker.tasksCompleted}</TableCell>
-                  <TableCell>{worker.performance}%</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                        <Progress value={worker.performance} className="w-24 h-2" />
+                        <span className="text-xs text-muted-foreground">{worker.performance}%</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    {worker.safetyGearIssued ? <Check className="w-5 h-5 text-green-600" /> : <X className="w-5 h-5 text-destructive" />}
+                  </TableCell>
+                  <TableCell>{worker.attendance}%</TableCell>
                   <TableCell>
                     <WorkerActions 
                         worker={worker} 
