@@ -19,13 +19,12 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { MoreHorizontal, User, Calendar, Tag, MapPin, Image as ImageIcon } from 'lucide-react';
+import { MoreHorizontal, User, Calendar, Tag, MapPin, Globe } from 'lucide-react';
 import type { Complaint, Worker } from '@/lib/types';
 import { workers } from '@/lib/data';
 import { format, parseISO } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import Image from 'next/image';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 
 type ComplaintActionsProps = {
@@ -105,6 +104,19 @@ export function ComplaintActions({ complaint, onUpdate }: ComplaintActionsProps)
                     <Tag className="w-4 h-4 text-muted-foreground" />
                     <span>{complaint.wasteCategory}</span>
                 </div>
+                {complaint.locationCoords && (
+                     <div className="flex items-center gap-2">
+                        <Globe className="w-4 h-4 text-muted-foreground" />
+                        <a 
+                            href={`https://www.google.com/maps/search/?api=1&query=${complaint.locationCoords.lat},${complaint.locationCoords.lng}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                        >
+                            {complaint.locationCoords.lat}, {complaint.locationCoords.lng}
+                        </a>
+                    </div>
+                )}
                 {assignedWorker && (
                     <div className="flex items-center gap-2 col-span-2">
                         <User className="w-4 h-4 text-muted-foreground" />

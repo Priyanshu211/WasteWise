@@ -17,6 +17,10 @@ export type Complaint = {
   userName: string;
   userPhotoUrl: string;
   location: string;
+  locationCoords: {
+    lat: number;
+    lng: number;
+  };
   wasteCategory: 'Organic' | 'Recyclable' | 'Hazardous' | 'Mixed';
   status: 'Pending' | 'In Progress' | 'Completed';
   assignedWorker?: string;
