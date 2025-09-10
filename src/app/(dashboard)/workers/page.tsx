@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import { PageHeader } from '@/components/common/page-header';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,19 +18,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, PlusCircle } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { workers } from '@/lib/data';
+import { workers as initialWorkers } from '@/lib/data';
 import { WorkerOptimizer } from '@/components/dashboard/worker-optimizer';
+import { WorkerActions } from '@/components/dashboard/worker-actions';
+import type { Worker } from '@/lib/types';
 
 export default function WorkersPage() {
+  const [workers, setWorkers] = useState<Worker[]>(initialWorkers);
+
   const getTrainingBadgeVariant = (phase: string) => {
     switch (phase) {
       case 'Completed':
@@ -38,6 +38,17 @@ export default function WorkersPage() {
         return 'outline';
     }
   };
+
+  const handleUpdateWorker = (updatedWorker: Worker) => {
+    setWorkers(prevWorkers => 
+      prevWorkers.map(w => w.workerId === updatedWorker.workerId ? updatedWorker : w)
+    );
+  };
+
+  const handleRemoveWorker = (workerId: string) => {
+    setWorkers(prevWorkers => prevWorkers.filter(w => w.workerId !== workerId));
+  };
+
 
   return (
     <>
@@ -76,27 +87,18 @@ export default function WorkersPage() {
                   <TableCell className="font-medium">{worker.name}</TableCell>
                   <TableCell className="hidden md:table-cell">{worker.area}</TableCell>
                   <TableCell>
-                    <Badge variant={getTrainingBadgeVariant(worker.trainingPhase)}>
+                    <Badge variant={getTrainingBadgeVariant(worker.trainingPhase)} className={worker.trainingPhase === 'Completed' ? 'bg-green-600' : ''}>
                       {worker.trainingPhase}
                     </Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">{worker.tasksCompleted}</TableCell>
                   <TableCell>{worker.performance}%</TableCell>
                   <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>View Profile</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <WorkerActions 
+                        worker={worker} 
+                        onUpdate={handleUpdateWorker}
+                        onRemove={handleRemoveWorker}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

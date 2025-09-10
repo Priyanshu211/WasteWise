@@ -41,17 +41,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/complaints', label: 'Complaints', icon: FileText, badge: 2 },
-  { href: '/workers', label: 'Workers', icon: Users },
-  { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-  { href: '/training', label: 'Training', icon: BookOpenCheck },
-  { href: '/facilities', label: 'Facilities', icon: Building },
-  { href: '/reports', label: 'Reports', icon: LineChart },
-  { href: '/settings', label: 'Settings', icon: Settings },
-];
+import { complaints } from '@/lib/data';
 
 export default function DashboardLayout({
   children,
@@ -60,6 +50,18 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
+  const pendingComplaintsCount = complaints.filter(c => c.status === 'Pending').length;
+
+  const navItems = [
+    { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/complaints', label: 'Complaints', icon: FileText, badge: pendingComplaintsCount > 0 ? pendingComplaintsCount : undefined },
+    { href: '/workers', label: 'Workers', icon: Users },
+    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+    { href: '/training', label: 'Training', icon: BookOpenCheck },
+    { href: '/facilities', label: 'Facilities', icon: Building },
+    { href: '/reports', label: 'Reports', icon: LineChart },
+    { href: '/settings', label: 'Settings', icon: Settings },
+  ];
 
   return (
     <SidebarProvider>
