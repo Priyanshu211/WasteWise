@@ -30,6 +30,9 @@ import {
   SidebarMenuButton,
   SidebarInset,
   SidebarTrigger,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -100,7 +103,7 @@ function DashboardNav() {
                     <SidebarMenuSub>
                        {trainingSubNav.map(subItem => (
                          <SidebarMenuSubItem key={subItem.label}>
-                            <Link href={subItem.href} passHref>
+                            <Link href={subItem.href}>
                                 <SidebarMenuSubButton isActive={pathname === subItem.href}>
                                     {subItem.label}
                                 </SidebarMenuSubButton>
