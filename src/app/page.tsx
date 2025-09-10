@@ -6,7 +6,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/complaints');
+    router.replace('/');
   }, [router]);
 
   return null;
