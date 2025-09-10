@@ -21,7 +21,6 @@ import {
 import { PlusCircle, Check, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { workers as initialWorkers } from '@/lib/data';
-import { WorkerOptimizer } from '@/components/dashboard/worker-optimizer';
 import { WorkerActions } from '@/components/dashboard/worker-actions';
 import type { Worker } from '@/lib/types';
 import { Progress } from '@/components/ui/progress';
@@ -56,7 +55,6 @@ export default function WorkersPage() {
         title="Waste Worker Management"
         description="Manage worker profiles, track training, and view performance."
       >
-        <WorkerOptimizer />
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
           Add Worker
