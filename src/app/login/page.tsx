@@ -59,7 +59,7 @@ export default function LoginPage() {
             <Button type="submit" className="w-full">
               Login
             </Button>
-            <Button variant="outline" className="w-full" type="submit">
+            <Button variant="outline" className="w-full" type="button" onClick={handleLogin}>
               Login as Regional Admin
             </Button>
           </form>
