@@ -16,7 +16,8 @@ import {
   Trophy,
   Users,
   PanelLeft,
-  ClipboardUser,
+  ClipboardList,
+  PieChart,
 } from 'lucide-react';
 
 import {
@@ -57,7 +58,8 @@ function DashboardNav() {
     { href: '/workers', label: 'Workers', icon: Users },
     { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
     { href: '/training', label: 'Training', icon: BookOpenCheck },
-    { href: '/training-assignment', label: 'Training Assignment', icon: ClipboardUser },
+    { href: '/training-assignment', label: 'Training Assignment', icon: ClipboardList },
+    { href: '/training-analytics', label: 'Training Analytics', icon: PieChart },
     { href: '/facilities', label: 'Facilities', icon: Building },
     { href: '/reports', label: 'Reports', icon: LineChart },
     { href: '/settings', label: 'Settings', icon: Settings },

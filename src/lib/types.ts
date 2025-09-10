@@ -60,5 +60,11 @@ export type TrainingProgram = {
   endDate: string;
 };
 
-
-
+export type TrainingFeedback = {
+    id: string;
+    name: string;
+    avatarUrl: string;
+    programName: string;
+    rating: number;
+    comment: string;
+};

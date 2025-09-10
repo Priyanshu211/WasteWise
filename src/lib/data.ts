@@ -1,6 +1,6 @@
 
 
-import { Worker, Complaint, Facility, TrainingProgress, TrainingProgram } from './types';
+import { Worker, Complaint, Facility, TrainingProgress, TrainingProgram, TrainingFeedback } from './types';
 
 export const workers: Worker[] = [
   { workerId: 'W001', name: 'Amit Kumar', area: 'Sector 15, Chandigarh', trainingPhase: 'Completed', tasksCompleted: 128, performance: 92, location: { lat: 30.7333, lng: 76.7794 }, skills: ['Hazardous Waste Handling', 'Recycling Sorting'] },
@@ -263,3 +263,23 @@ export const facilityUtilization = [
     { name: 'Mayapuri', utilization: 78 },
 ];
 
+export const trainingParticipationByMonth = [
+    { month: 'Jan', workers: 30, citizens: 50 },
+    { month: 'Feb', workers: 45, citizens: 60 },
+    { month: 'Mar', workers: 40, citizens: 75 },
+    { month: 'Apr', workers: 50, citizens: 70 },
+    { month: 'May', workers: 55, citizens: 85 },
+    { month: 'Jun', workers: 60, citizens: 90 },
+];
+
+export const trainingCompletionByAudience = [
+    { name: 'Workers', completed: 150, total: 200 },
+    { name: 'Citizens', completed: 350, total: 500 },
+];
+
+export const trainingFeedback: TrainingFeedback[] = [
+    { id: 'FB001', name: 'Amit Kumar', avatarUrl: 'https://picsum.photos/seed/user1/40/40', programName: 'Hazardous Waste Handling', rating: 5, comment: 'Excellent course, very informative and practical.' },
+    { id: 'FB002', name: 'Priya Sharma', avatarUrl: 'https://picsum.photos/seed/user2/40/40', programName: 'Safety Procedures 101', rating: 4, comment: 'Good overview, but could use more real-life examples.' },
+    { id: 'FB003', name: 'Rohan Mehra', avatarUrl: 'https://picsum.photos/seed/user8/40/40', programName: 'Community Recycling Education', rating: 5, comment: 'Very helpful! I now know how to sort my recyclables properly.' },
+    { id: 'FB004', name: 'Sunita Devi', avatarUrl: 'https://picsum.photos/seed/user4/40/40', programName: 'Vehicle Maintenance Basics', rating: 3, comment: 'The content was a bit too technical for me.' },
+];
