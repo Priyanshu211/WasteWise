@@ -44,7 +44,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { ComplaintsProvider, useComplaints } from '@/context/ComplaintsContext';
 
-function DashboardNav() {
+function DashboardNav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { complaints } = useComplaints();
   const isActive = (href: string) => pathname === href;
