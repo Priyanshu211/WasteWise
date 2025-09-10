@@ -32,8 +32,10 @@ export type Complaint = {
 export type Facility = {
   id: string;
   name: string;
-  type: 'Recycling Center' | 'Compost Plant' | 'Scrap Shop';
-  location: string;
+  type: 'W-to-E' | 'Biomethanization' | 'Recycling Center' | 'Scrap Shop';
+  address: string;
+  capacity: string;
+  status: 'Active' | 'Under Maintenance';
 };
 
 export type TrainingProgress = {
@@ -43,4 +45,5 @@ export type TrainingProgress = {
   completion: number;
   lastAccessed: string;
 };
+
 

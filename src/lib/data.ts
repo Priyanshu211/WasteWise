@@ -110,21 +110,51 @@ export const complaints: Complaint[] = [
 export const facilities: Facility[] = [
   {
     id: 'F001',
-    name: 'Chandigarh Recycling Hub',
-    type: 'Recycling Center',
-    location: 'Industrial Area Phase 1',
+    name: 'Okhla W-to-E Plant',
+    type: 'W-to-E',
+    address: 'Okhla Industrial Area, New Delhi',
+    capacity: '2000 TPD',
+    status: 'Active',
   },
   {
     id: 'F002',
-    name: 'Green Earth Compost',
-    type: 'Compost Plant',
-    location: 'Dadu Majra Colony',
+    name: 'Ghazipur Biomethanization',
+    type: 'Biomethanization',
+    address: 'Ghazipur, East Delhi',
+    capacity: '500 TPD',
+    status: 'Active',
   },
   {
     id: 'F003',
+    name: 'Chandigarh Recycling Hub',
+    type: 'Recycling Center',
+    address: 'Industrial Area Phase 1, Chandigarh',
+    capacity: '300 TPD',
+    status: 'Under Maintenance',
+  },
+    {
+    id: 'F004',
+    name: 'Narela Waste-to-Energy Plant',
+    type: 'W-to-E',
+    address: 'Narela, North Delhi',
+    capacity: '1500 TPD',
+    status: 'Active',
+  },
+  {
+    id: 'F005',
+    name: 'Bawana Recycling Facility',
+    type: 'Recycling Center',
+    address: 'Bawana Industrial Area, North West Delhi',
+    capacity: '400 TPD',
+    status: 'Active',
+  },
+  {
+    id: 'F006',
     name: 'City Scrap Dealers',
     type: 'Scrap Shop',
-    location: 'Sector 26',
+    address: 'Mayapuri, West Delhi',
+    capacity: '100 TPD',
+    status: 'Active',
   },
 ];
 
@@ -171,4 +201,5 @@ export const trainingCompletionRates = [
     { name: 'In Progress', value: 45, fill: 'var(--color-chart-3)' },
     { name: 'Completed', value: 40, fill: 'var(--color-chart-1)' },
 ];
+
 
