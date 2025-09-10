@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { MoreVertical, PlusCircle, X, Edit } from 'lucide-react';
+import { MoreVertical, PlusCircle, X, Edit, List, Map } from 'lucide-react';
 import { facilities as allFacilities } from '@/lib/data';
 import type { Facility } from '@/lib/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -26,6 +26,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { AddEditFacilityDialog } from '@/components/dashboard/add-edit-facility-dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -115,110 +116,139 @@ export default function FacilitiesPage() {
         </Button>
       </PageHeader>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Facility List</CardTitle>
-          <CardDescription>A comprehensive list of all operational facilities.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap items-center gap-4 mb-6">
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Filter by type..." />
-              </SelectTrigger>
-              <SelectContent>
-                {facilityTypes.map(type => (
-                  <SelectItem key={type} value={type} className="capitalize">
-                    {type === 'all' ? 'All Types' : type}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+      <Tabs defaultValue="list">
+        <div className="flex justify-between items-center mb-4">
+            <TabsList>
+            <TabsTrigger value="list"><List className="mr-2 h-4 w-4" />List View</TabsTrigger>
+            <TabsTrigger value="map"><Map className="mr-2 h-4 w-4" />Map View</TabsTrigger>
+            </TabsList>
+            <div className="flex flex-wrap items-center gap-2">
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                <SelectTrigger className="w-full sm:w-[200px]">
+                    <SelectValue placeholder="Filter by type..." />
+                </SelectTrigger>
+                <SelectContent>
+                    {facilityTypes.map(type => (
+                    <SelectItem key={type} value={type} className="capitalize">
+                        {type === 'all' ? 'All Types' : type}
+                    </SelectItem>
+                    ))}
+                </SelectContent>
+                </Select>
 
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by status..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="Active">Active</SelectItem>
-                <SelectItem value="Under Maintenance">Under Maintenance</SelectItem>
-              </SelectContent>
-            </Select>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="Filter by status..." />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All Statuses</SelectItem>
+                    <SelectItem value="Active">Active</SelectItem>
+                    <SelectItem value="Under Maintenance">Under Maintenance</SelectItem>
+                </SelectContent>
+                </Select>
 
-            {hasActiveFilters && (
-              <Button variant="ghost" onClick={clearFilters} className="text-destructive hover:text-destructive">
-                <X className="mr-2 h-4 w-4" />
-                Clear Filters
-              </Button>
-            )}
-          </div>
-
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Address</TableHead>
-                <TableHead>Capacity</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedFacilities.map((facility) => (
-                <TableRow key={facility.id}>
-                  <TableCell className="font-medium">{facility.name}</TableCell>
-                  <TableCell>{facility.type}</TableCell>
-                  <TableCell>{facility.address}</TableCell>
-                  <TableCell>{facility.capacity}</TableCell>
-                  <TableCell>
-                    <Badge variant={getStatusBadgeVariant(facility.status)} className={facility.status === 'Active' ? 'bg-green-600' : ''}>
-                      {facility.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => setSelectedFacility(facility)}>
-                        <MoreVertical className="h-4 w-4" />
-                        <span className="sr-only">View Details</span>
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-
-          {filteredFacilities.length === 0 && (
-              <div className="text-center p-8 text-muted-foreground">
-                  No facilities found for the selected filters.
-              </div>
-          )}
-
-          {totalPages > 1 && (
-            <div className="flex items-center justify-end space-x-2 py-4">
-                <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-                disabled={currentPage === 1}
-                >
-                Previous
+                {hasActiveFilters && (
+                <Button variant="ghost" onClick={clearFilters} className="text-destructive hover:text-destructive">
+                    <X className="mr-2 h-4 w-4" />
+                    Clear Filters
                 </Button>
-                <span className="text-sm text-muted-foreground">
-                    Page {currentPage} of {totalPages}
-                </span>
-                <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
-                disabled={currentPage === totalPages}
-                >
-                Next
-                </Button>
+                )}
             </div>
-            )}
-        </CardContent>
-      </Card>
+        </div>
+
+        <TabsContent value="list">
+            <Card>
+                <CardHeader>
+                <CardTitle>Facility List</CardTitle>
+                <CardDescription>A comprehensive list of all operational facilities.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                <Table>
+                    <TableHeader>
+                    <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Type</TableHead>
+                        <TableHead>Address</TableHead>
+                        <TableHead>Capacity</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                    </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                    {paginatedFacilities.map((facility) => (
+                        <TableRow key={facility.id}>
+                        <TableCell className="font-medium">{facility.name}</TableCell>
+                        <TableCell>{facility.type}</TableCell>
+                        <TableCell>{facility.address}</TableCell>
+                        <TableCell>{facility.capacity}</TableCell>
+                        <TableCell>
+                            <Badge variant={getStatusBadgeVariant(facility.status)} className={facility.status === 'Active' ? 'bg-green-600' : ''}>
+                            {facility.status}
+                            </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                            <Button variant="ghost" size="icon" onClick={() => setSelectedFacility(facility)}>
+                                <MoreVertical className="h-4 w-4" />
+                                <span className="sr-only">View Details</span>
+                            </Button>
+                        </TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+
+                {filteredFacilities.length === 0 && (
+                    <div className="text-center p-8 text-muted-foreground">
+                        No facilities found for the selected filters.
+                    </div>
+                )}
+
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-end space-x-2 py-4">
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                        disabled={currentPage === 1}
+                        >
+                        Previous
+                        </Button>
+                        <span className="text-sm text-muted-foreground">
+                            Page {currentPage} of {totalPages}
+                        </span>
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                        disabled={currentPage === totalPages}
+                        >
+                        Next
+                        </Button>
+                    </div>
+                    )}
+                </CardContent>
+            </Card>
+        </TabsContent>
+        <TabsContent value="map">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Facilities Map</CardTitle>
+                    <CardDescription>Geographical distribution of all facilities.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="bg-muted rounded-lg h-96 flex flex-col items-center justify-center text-center p-8">
+                         <div className="mx-auto bg-background rounded-full p-4">
+                            <Map className="w-12 h-12 text-muted-foreground" />
+                        </div>
+                        <h3 className="mt-4 text-lg font-semibold">Interactive Map Coming Soon</h3>
+                        <p className="text-muted-foreground mt-2 max-w-md">
+                            This area will display an interactive map with facility locations. Integration with a mapping library like Leaflet or Google Maps is required.
+                        </p>
+                    </div>
+                </CardContent>
+            </Card>
+        </TabsContent>
+      </Tabs>
       
       {/* Facility Details Modal */}
       <Dialog open={!!selectedFacility} onOpenChange={(isOpen) => !isOpen && setSelectedFacility(null)}>
