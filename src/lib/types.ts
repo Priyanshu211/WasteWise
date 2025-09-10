@@ -1,4 +1,5 @@
 
+
 export type Worker = {
   workerId: string;
   name: string;
@@ -45,5 +46,19 @@ export type TrainingProgress = {
   completion: number;
   lastAccessed: string;
 };
+
+export type TrainingProgram = {
+  id: string;
+  name: string;
+  audience: 'Workers' | 'Citizens';
+  phase: string;
+  duration: string;
+  status: 'Active' | 'Upcoming' | 'Completed';
+  description: string;
+  trainerName: string;
+  startDate: string;
+  endDate: string;
+};
+
 
 

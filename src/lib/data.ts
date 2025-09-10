@@ -1,5 +1,6 @@
 
-import { Worker, Complaint, Facility, TrainingProgress } from './types';
+
+import { Worker, Complaint, Facility, TrainingProgress, TrainingProgram } from './types';
 
 export const workers: Worker[] = [
   { workerId: 'W001', name: 'Amit Kumar', area: 'Sector 15, Chandigarh', trainingPhase: 'Completed', tasksCompleted: 128, performance: 92, location: { lat: 30.7333, lng: 76.7794 }, skills: ['Hazardous Waste Handling', 'Recycling Sorting'] },
@@ -176,6 +177,57 @@ export const trainingProgress: TrainingProgress[] = [
   { workerId: 'W006', workerName: 'Ravi Chauhan', module: 'Advanced Composting', completion: 90, lastAccessed: '2024-07-18' },
   { workerId: 'W008', workerName: 'Arjun Singh', module: 'Heavy Machinery Ops', completion: 100, lastAccessed: '2024-06-30' },
   { workerId: 'W009', workerName: 'Meera Devi', module: 'Safety Procedures', completion: 25, lastAccessed: '2024-07-20' },
+];
+
+export const trainingPrograms: TrainingProgram[] = [
+  {
+    id: 'TP001',
+    name: 'Safety Procedures 101',
+    audience: 'Workers',
+    phase: 'Phase 1',
+    duration: '3 days',
+    status: 'Active',
+    description: 'Basic safety protocols for all new sanitation workers.',
+    trainerName: 'Anil Kapoor',
+    startDate: '2024-08-01',
+    endDate: '2024-08-03'
+  },
+  {
+    id: 'TP002',
+    name: 'Hazardous Waste Handling',
+    audience: 'Workers',
+    phase: 'Phase 2',
+    duration: '5 days',
+    status: 'Active',
+    description: 'Advanced course on identifying and safely handling hazardous materials.',
+    trainerName: 'Priya Singh',
+    startDate: '2024-08-05',
+    endDate: '2024-08-09'
+  },
+  {
+    id: 'TP003',
+    name: 'Community Recycling Education',
+    audience: 'Citizens',
+    phase: 'N/A',
+    duration: '2 hours',
+    status: 'Upcoming',
+    description: 'A webinar to educate citizens on proper recycling techniques.',
+    trainerName: 'Ravi Kumar',
+    startDate: '2024-08-15',
+    endDate: '2024-08-15'
+  },
+  {
+    id: 'TP004',
+    name: 'Vehicle Maintenance Basics',
+    audience: 'Workers',
+    phase: 'Phase 1',
+    duration: '2 days',
+    status: 'Completed',
+    description: 'Training on daily checks and basic maintenance of waste collection vehicles.',
+    trainerName: 'Sanjay Sharma',
+    startDate: '2024-07-10',
+    endDate: '2024-07-11'
+  }
 ];
 
 export const complaintsByMonth = [
