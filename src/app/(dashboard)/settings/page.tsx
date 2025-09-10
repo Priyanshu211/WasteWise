@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { FileDown, MoreVertical, Upload } from 'lucide-react';
+import { useEffect } from 'react';
 
 // Sample data for user management
 const admins = [
@@ -26,6 +27,13 @@ const admins = [
 ];
 
 export default function SettingsPage() {
+  
+  useEffect(() => {
+    // On mount, check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    handleThemeChange(savedTheme as 'light' | 'dark' | 'system');
+  }, []);
+
 
   // In a real application, these handlers would interact with a backend/Firebase.
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,10 +50,14 @@ export default function SettingsPage() {
   };
 
   const handleThemeChange = (theme: 'light' | 'dark' | 'system') => {
-    console.log('Setting theme to:', theme);
-    // TODO: Implement theme saving logic here.
-    // 1. Update the theme in the UI (e.g., by adding/removing 'dark' class from the html element).
-    // 2. Save the user's preference to their user document in Firestore.
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.classList.toggle('dark', systemTheme === 'dark');
+    } else {
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    }
+    // TODO: Save theme preference to localStorage and/or Firestore for persistence.
+    localStorage.setItem('theme', theme);
   };
 
   const handleExport = (dataType: 'complaints' | 'workers' | 'leaderboard', format: 'csv' | 'pdf') => {
@@ -214,6 +226,7 @@ export default function SettingsPage() {
               <div className="flex gap-4">
                 <Button variant="outline" onClick={() => handleThemeChange('light')}>Light</Button>
                 <Button variant="outline" onClick={() => handleThemeChange('dark')}>Dark</Button>
+                <Button variant="outline" onClick={() => handleThemeChange('system')}>System</Button>
               </div>
             </CardContent>
           </Card>
