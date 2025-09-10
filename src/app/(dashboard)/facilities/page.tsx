@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -19,30 +18,34 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { MoreVertical, PlusCircle, X } from 'lucide-react';
+import { MoreVertical, PlusCircle, X, Edit } from 'lucide-react';
 import { facilities as allFacilities } from '@/lib/data';
 import type { Facility } from '@/lib/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
+import { AddEditFacilityDialog } from '@/components/dashboard/add-edit-facility-dialog';
 
 const ITEMS_PER_PAGE = 5;
 
 export default function FacilitiesPage() {
+  const [facilities, setFacilities] = useState<Facility[]>(allFacilities);
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
+  const [isAddEditOpen, setIsAddEditOpen] = useState(false);
+  const [editingFacility, setEditingFacility] = useState<Facility | undefined>(undefined);
+
 
   const facilityTypes = useMemo(() => {
-    const types = new Set(allFacilities.map(f => f.type));
+    const types = new Set(facilities.map(f => f.type));
     return ['all', ...Array.from(types)];
-  }, []);
+  }, [facilities]);
 
   const filteredFacilities = useMemo(() => {
-    // In a real app, filtering would be part of the Firestore query.
-    return allFacilities
+    return facilities
       .filter(facility => {
         if (typeFilter === 'all') return true;
         return facility.type === typeFilter;
@@ -51,7 +54,7 @@ export default function FacilitiesPage() {
         if (statusFilter === 'all') return true;
         return facility.status === statusFilter;
       });
-  }, [typeFilter, statusFilter]);
+  }, [facilities, typeFilter, statusFilter]);
 
   const paginatedFacilities = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -59,6 +62,31 @@ export default function FacilitiesPage() {
   }, [filteredFacilities, currentPage]);
 
   const totalPages = Math.ceil(filteredFacilities.length / ITEMS_PER_PAGE);
+
+  const handleOpenAdd = () => {
+    setEditingFacility(undefined);
+    setIsAddEditOpen(true);
+  };
+  
+  const handleOpenEdit = (facility: Facility) => {
+    setEditingFacility(facility);
+    setSelectedFacility(null); // Close the details view
+    setIsAddEditOpen(true);
+  }
+
+  const handleSaveFacility = (facilityData: Omit<Facility, 'id'>, id?: string) => {
+    if (id) {
+      // Update existing facility
+      setFacilities(facilities.map(f => f.id === id ? { ...f, ...facilityData } : f));
+    } else {
+      // Add new facility
+      const newFacility: Facility = {
+        id: `F${Date.now().toString().slice(-4)}`, // Simple unique ID generation
+        ...facilityData
+      };
+      setFacilities([newFacility, ...facilities]);
+    }
+  };
 
   const clearFilters = () => {
     setTypeFilter('all');
@@ -75,14 +103,13 @@ export default function FacilitiesPage() {
     }
   };
 
-
   return (
     <>
       <PageHeader
         title="Facilities & Resources"
         description="Manage recycling centers, compost plants, and other facilities."
       >
-        <Button>
+        <Button onClick={handleOpenAdd}>
           <PlusCircle className="mr-2 h-4 w-4" />
           Add Facility
         </Button>
@@ -95,7 +122,6 @@ export default function FacilitiesPage() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap items-center gap-4 mb-6">
-            {/* Filter by Type */}
             <Select value={typeFilter} onValueChange={setTypeFilter}>
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Filter by type..." />
@@ -109,7 +135,6 @@ export default function FacilitiesPage() {
               </SelectContent>
             </Select>
 
-            {/* Filter by Status */}
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by status..." />
@@ -205,7 +230,6 @@ export default function FacilitiesPage() {
           {selectedFacility && (
             <div className="space-y-4 py-4 text-sm">
                 <div className="relative h-40 w-full rounded-md overflow-hidden bg-muted">
-                    {/* In a real app, this image would come from the facility data */}
                     <Image src={`https://picsum.photos/seed/${selectedFacility.id}/600/400`} alt={selectedFacility.name} layout="fill" objectFit="cover" data-ai-hint="industrial building" />
                 </div>
                 <p><strong>Type:</strong> {selectedFacility.type}</p>
@@ -222,11 +246,23 @@ export default function FacilitiesPage() {
                 </div>
             </div>
           )}
-          <DialogFooter>
+          <DialogFooter className="justify-between">
+            <Button variant="outline" onClick={() => handleOpenEdit(selectedFacility!)}>
+                <Edit className="mr-2 h-4 w-4" />
+                Edit
+            </Button>
             <Button variant="secondary" onClick={() => setSelectedFacility(null)}>Close</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      
+      {/* Add/Edit Facility Modal */}
+      <AddEditFacilityDialog 
+        isOpen={isAddEditOpen} 
+        onOpenChange={setIsAddEditOpen}
+        facility={editingFacility}
+        onSave={handleSaveFacility}
+      />
     </>
   );
 }
