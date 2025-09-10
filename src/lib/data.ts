@@ -1,5 +1,5 @@
 
-import { Worker, Complaint, Facility } from './types';
+import { Worker, Complaint, Facility, TrainingProgress } from './types';
 
 export const workers: Worker[] = [
   { workerId: 'W001', name: 'Amit Kumar', area: 'Sector 15, Chandigarh', trainingPhase: 'Completed', tasksCompleted: 128, performance: 92, location: { lat: 30.7333, lng: 76.7794 }, skills: ['Hazardous Waste Handling', 'Recycling Sorting'] },
@@ -137,3 +137,38 @@ export const complaintsByDay = [
     { date: "2024-07-20", "Completed": 35, "Pending": 2, "In Progress": 5 },
     { date: "2024-07-21", "Completed": 32, "Pending": 5, "In Progress": 8 },
 ];
+
+export const trainingProgress: TrainingProgress[] = [
+  { workerId: 'W001', workerName: 'Amit Kumar', module: 'Hazardous Waste 101', completion: 100, lastAccessed: '2024-07-15' },
+  { workerId: 'W002', workerName: 'Priya Sharma', module: 'Advanced Composting', completion: 75, lastAccessed: '2024-07-22' },
+  { workerId: 'W003', workerName: 'Rahul Verma', module: 'Heavy Machinery Ops', completion: 100, lastAccessed: '2024-07-10' },
+  { workerId: 'W004', workerName: 'Sunita Devi', module: 'Safety Procedures', completion: 40, lastAccessed: '2024-07-21' },
+  { workerId: 'W006', workerName: 'Ravi Chauhan', module: 'Advanced Composting', completion: 90, lastAccessed: '2024-07-18' },
+  { workerId: 'W008', workerName: 'Arjun Singh', module: 'Heavy Machinery Ops', completion: 100, lastAccessed: '2024-06-30' },
+  { workerId: 'W009', workerName: 'Meera Devi', module: 'Safety Procedures', completion: 25, lastAccessed: '2024-07-20' },
+];
+
+export const complaintsByMonth = [
+    { month: 'Jan', count: 186 },
+    { month: 'Feb', count: 205 },
+    { month: 'Mar', count: 257 },
+    { month: 'Apr', count: 220 },
+    { month: 'May', count: 280 },
+    { month: 'Jun', count: 310 },
+    { month: 'Jul', count: 295 },
+];
+  
+export const wasteByZone = [
+    { name: 'North Delhi', value: 400, fill: 'var(--color-chart-1)' },
+    { name: 'South Delhi', value: 300, fill: 'var(--color-chart-2)' },
+    { name: 'East Delhi', value: 200, fill: 'var(--color-chart-3)' },
+    { name: 'West Delhi', value: 278, fill: 'var(--color-chart-4)' },
+    { name: 'Chandigarh', value: 189, fill: 'var(--color-chart-5)' },
+];
+  
+export const trainingCompletionRates = [
+    { name: 'Not Started', value: 15, fill: 'var(--color-chart-5)' },
+    { name: 'In Progress', value: 45, fill: 'var(--color-chart-3)' },
+    { name: 'Completed', value: 40, fill: 'var(--color-chart-1)' },
+];
+

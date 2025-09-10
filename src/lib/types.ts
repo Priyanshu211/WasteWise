@@ -1,3 +1,4 @@
+
 export type Worker = {
   workerId: string;
   name: string;
@@ -34,3 +35,12 @@ export type Facility = {
   type: 'Recycling Center' | 'Compost Plant' | 'Scrap Shop';
   location: string;
 };
+
+export type TrainingProgress = {
+  workerId: string;
+  workerName: string;
+  module: 'Hazardous Waste 101' | 'Advanced Composting' | 'Heavy Machinery Ops' | 'Safety Procedures';
+  completion: number;
+  lastAccessed: string;
+};
+

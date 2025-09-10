@@ -11,11 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Progress } from '@/components/ui/progress';
 import { CalendarIcon, Globe, MoreVertical, X, ChevronsUpDown, ArrowUp, ArrowDown, History } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 import { format, parseISO, isWithinInterval, startOfDay, endOfDay } from 'date-fns';
-import { complaints as allComplaints, workers as allWorkers } from '@/lib/data';
-import type { Complaint, Worker } from '@/lib/types';
+import { complaints as allComplaints, workers as allWorkers, trainingProgress as allTrainingProgress } from '@/lib/data';
+import type { Complaint, Worker, TrainingProgress } from '@/lib/types';
 import Image from 'next/image';
 
 const ITEMS_PER_PAGE = 10;
@@ -34,6 +35,8 @@ export default function ReportsPage() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedWorker, setSelectedWorker] = useState<Worker | null>(null);
 
+  // State for Training Progress Report
+  const [moduleFilter, setModuleFilter] = useState('all');
 
   // Memoized logic for Complaints Report
   const filteredComplaints = useMemo(() => {
@@ -62,14 +65,19 @@ export default function ReportsPage() {
 
   // Memoized logic for Worker Performance Report
   const sortedWorkers = useMemo(() => {
-    // In a real application, you would fetch and sort this data from Firestore/your backend.
-    // Example: query(collection(db, 'workers'), orderBy(sortBy, sortDirection));
     return [...allWorkers].sort((a, b) => {
       if (a[sortBy] < b[sortBy]) return sortDirection === 'asc' ? -1 : 1;
       if (a[sortBy] > b[sortBy]) return sortDirection === 'asc' ? 1 : -1;
       return 0;
     });
   }, [sortBy, sortDirection]);
+
+  // Memoized logic for Training Progress Report
+  const filteredTrainingProgress = useMemo(() => {
+    // In a real application, you would fetch and filter this from Firestore.
+    if (moduleFilter === 'all') return allTrainingProgress;
+    return allTrainingProgress.filter(p => p.module === moduleFilter);
+  }, [moduleFilter]);
 
   const handleSort = (key: SortKey) => {
     if (sortBy === key) {
@@ -239,7 +247,7 @@ export default function ReportsPage() {
             </CardContent>
         </Card>
         
-        <Card className="xl:col-span-2">
+        <Card>
             <CardHeader>
                 <CardTitle>Worker Performance Report</CardTitle>
                 <CardDescription>View and sort worker performance data.</CardDescription>
@@ -284,6 +292,56 @@ export default function ReportsPage() {
                 </Table>
             </CardContent>
         </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Training Progress Report</CardTitle>
+                <CardDescription>Monitor worker training completion and activity.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="mb-4">
+                    {/* In a real app, this filter would trigger a new query to Firestore */}
+                    <Select value={moduleFilter} onValueChange={setModuleFilter}>
+                        <SelectTrigger className="w-[240px]">
+                            <SelectValue placeholder="Filter by module..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">All Modules</SelectItem>
+                            <SelectItem value="Hazardous Waste 101">Hazardous Waste 101</SelectItem>
+                            <SelectItem value="Advanced Composting">Advanced Composting</SelectItem>
+                            <SelectItem value="Heavy Machinery Ops">Heavy Machinery Ops</SelectItem>
+                            <SelectItem value="Safety Procedures">Safety Procedures</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Worker</TableHead>
+                            <TableHead>Module</TableHead>
+                            <TableHead>Completion</TableHead>
+                            <TableHead className="text-right">Last Accessed</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {filteredTrainingProgress.map(item => (
+                            <TableRow key={item.workerId + item.module}>
+                                <TableCell className="font-medium">{item.workerName}</TableCell>
+                                <TableCell>{item.module}</TableCell>
+                                <TableCell>
+                                    <div className="flex items-center gap-2">
+                                        <Progress value={item.completion} className="w-24 h-2" />
+                                        <span className="text-xs text-muted-foreground">{item.completion}%</span>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="text-right">{format(parseISO(item.lastAccessed), 'PP')}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+
       </div>
 
       {/* Complaint Details Modal */}
