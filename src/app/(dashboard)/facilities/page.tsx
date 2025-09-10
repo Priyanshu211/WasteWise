@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -18,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { MoreVertical, PlusCircle, X, Edit, List, Map } from 'lucide-react';
+import { MoreVertical, PlusCircle, X, Edit, List, Map, FileDown } from 'lucide-react';
 import { facilities as allFacilities } from '@/lib/data';
 import type { Facility } from '@/lib/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -27,6 +28,7 @@ import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { AddEditFacilityDialog } from '@/components/dashboard/add-edit-facility-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -38,6 +40,8 @@ export default function FacilitiesPage() {
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [isAddEditOpen, setIsAddEditOpen] = useState(false);
   const [editingFacility, setEditingFacility] = useState<Facility | undefined>(undefined);
+  const [exportType, setExportType] = useState('all');
+  const { toast } = useToast();
 
 
   const facilityTypes = useMemo(() => {
@@ -87,6 +91,18 @@ export default function FacilitiesPage() {
       };
       setFacilities([newFacility, ...facilities]);
     }
+  };
+
+  const handleExport = (format: 'csv' | 'pdf') => {
+    // In a real application, this would trigger a call to a backend service or Cloud Function.
+    // The function would query Firestore for the facilities (filtered by `exportType`),
+    // generate the file, and provide a download link.
+    console.log(`Exporting ${exportType} facilities as ${format}`);
+    
+    toast({
+      title: 'Export Started',
+      description: `Your export of "${exportType}" facilities as a ${format.toUpperCase()} file has started. You'll be notified when it's ready.`,
+    });
   };
 
   const clearFilters = () => {
@@ -249,6 +265,37 @@ export default function FacilitiesPage() {
             </Card>
         </TabsContent>
       </Tabs>
+      
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Export Facility Data</CardTitle>
+          <CardDescription>Download a report of facilities based on their type.</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-wrap items-center gap-4">
+          <Select value={exportType} onValueChange={setExportType}>
+            <SelectTrigger className="w-full sm:w-[220px]">
+              <SelectValue placeholder="Select facility type..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Facility Types</SelectItem>
+              <SelectItem value="W-to-E">W-to-E</SelectItem>
+              <SelectItem value="Biomethanization">Biomethanization</SelectItem>
+              <SelectItem value="Recycling Center">Recycling Center</SelectItem>
+              <SelectItem value="Scrap Shop">Scrap Shop</SelectItem>
+            </SelectContent>
+          </Select>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => handleExport('csv')}>
+              <FileDown className="mr-2 h-4 w-4" />
+              Export as CSV
+            </Button>
+            <Button variant="outline" onClick={() => handleExport('pdf')}>
+              <FileDown className="mr-2 h-4 w-4" />
+              Export as PDF
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
       
       {/* Facility Details Modal */}
       <Dialog open={!!selectedFacility} onOpenChange={(isOpen) => !isOpen && setSelectedFacility(null)}>
