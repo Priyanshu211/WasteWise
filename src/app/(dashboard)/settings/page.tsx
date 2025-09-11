@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { FileDown, MoreVertical, Upload } from 'lucide-react';
 import { useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 const admins = [
   { id: 'admin1', name: 'Super Admin', email: 'admin@wastewise.com', role: 'Super Admin', avatar: 'https://picsum.photos/seed/admin-avatar/40/40' },
@@ -26,20 +27,25 @@ const admins = [
 ];
 
 export default function SettingsPage() {
+  const { toast } = useToast();
   
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'system';
-    handleThemeChange(savedTheme as 'light' | 'dark' | 'system');
+    handleThemeChange(savedTheme as 'light' | 'dark' | 'system', true);
   }, []);
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       console.log('Uploading file:', file.name);
+      toast({
+        title: 'Logo Selected',
+        description: `${file.name} is ready. Click "Save Changes" to apply.`,
+      });
     }
   };
 
-  const handleThemeChange = (theme: 'light' | 'dark' | 'system') => {
+  const handleThemeChange = (theme: 'light' | 'dark' | 'system', silent = false) => {
     if (theme === 'system') {
       const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       document.documentElement.classList.toggle('dark', systemTheme === 'dark');
@@ -47,11 +53,26 @@ export default function SettingsPage() {
       document.documentElement.classList.toggle('dark', theme === 'dark');
     }
     localStorage.setItem('theme', theme);
+    if (!silent) {
+        toast({
+            title: 'Theme Changed',
+            description: `Theme has been set to ${theme}.`,
+        });
+    }
   };
 
   const handleExport = (dataType: 'complaints' | 'workers' | 'leaderboard', format: 'csv' | 'pdf') => {
     console.log(`Exporting ${dataType} as ${format}`);
+    toast({
+        title: 'Export Started',
+        description: `Your export of ${dataType} as a ${format.toUpperCase()} file has started.`,
+    });
   };
+
+  const showToast = (title: string, description: string) => {
+    toast({ title, description });
+  };
+
 
   return (
     <>
@@ -100,7 +121,7 @@ export default function SettingsPage() {
                 <Input id="contact-info" placeholder="e.g., contact@wastewise.com, +1234567890" />
               </div>
                <div className="flex justify-end">
-                <Button>Save Changes</Button>
+                <Button onClick={() => showToast('Changes Saved', 'Organization settings have been updated.')}>Save Changes</Button>
               </div>
             </CardContent>
           </Card>
@@ -113,7 +134,7 @@ export default function SettingsPage() {
                     <CardTitle>User & Role Management</CardTitle>
                     <CardDescription>Manage admin access and roles within the system.</CardDescription>
                 </div>
-                <Button>Add New Admin</Button>
+                <Button onClick={() => showToast('Feature Coming Soon', 'Ability to add new admins will be available shortly.')}>Add New Admin</Button>
             </CardHeader>
             <CardContent>
               <Table>
@@ -147,9 +168,9 @@ export default function SettingsPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
-                            <DropdownMenuItem>Change Role</DropdownMenuItem>
-                            <DropdownMenuItem>Reset Password</DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive">Remove User</DropdownMenuItem>
+                            <DropdownMenuItem onSelect={() => showToast('Action Triggered', `Change role for ${admin.name}.`)}>Change Role</DropdownMenuItem>
+                            <DropdownMenuItem onSelect={() => showToast('Action Triggered', `Password reset for ${admin.name}.`)}>Reset Password</DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive" onSelect={() => showToast('Action Triggered', `Remove user ${admin.name}.`,)}>Remove User</DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>
@@ -188,6 +209,9 @@ export default function SettingsPage() {
                     <p className="text-sm text-muted-foreground">Send reminders for upcoming training deadlines.</p>
                  </div>
                 <Switch id="training-reminder" />
+              </div>
+               <div className="flex justify-end pt-2">
+                <Button onClick={() => showToast('Settings Saved', 'Notification preferences have been updated.')}>Save Changes</Button>
               </div>
             </CardContent>
           </Card>
