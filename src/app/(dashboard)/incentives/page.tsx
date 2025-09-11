@@ -32,6 +32,16 @@ const dummyComplianceData = [
   { id: 'BG018', name: 'Indian School of Business', type: 'Institutional', compliance: 94, points: 520, penalties: 0 },
   { id: 'BG019', name: 'Apollo Hospital', type: 'Hospital', compliance: 88, points: 320, penalties: 1 },
   { id: 'BG020', name: 'Ambience Mall', type: 'Commercial', compliance: 81, points: 220, penalties: 2 },
+  { id: 'BG021', name: 'The Leela Palace', type: 'Hotel', compliance: 97, points: 650, penalties: 0 },
+  { id: 'BG022', name: 'DLF CyberHub', type: 'Commercial', compliance: 90, points: 380, penalties: 0 },
+  { id: 'BG023', name: 'Manipal Hospital', type: 'Hospital', compliance: 84, points: 270, penalties: 1 },
+  { id: 'BG024', name: 'Ashoka University', type: 'Institutional', compliance: 92, points: 460, penalties: 0 },
+  { id: 'BG025', name: 'Prestige Shantiniketan', type: 'Residential', compliance: 77, points: 170, penalties: 2 },
+  { id: 'BG026', name: 'ITC Maurya', type: 'Hotel', compliance: 98, points: 680, penalties: 0 },
+  { id: 'BG027', name: 'Worldmark Gurgaon', type: 'Commercial', compliance: 89, points: 360, penalties: 1 },
+  { id: 'BG028', name: 'Medanta - The Medicity', type: 'Hospital', compliance: 91, points: 420, penalties: 0 },
+  { id: 'BG029', name: 'IIT Delhi', type: 'Institutional', compliance: 93, points: 490, penalties: 0 },
+  { id: 'BG030', name: 'Sobha City', type: 'Residential', compliance: 83, points: 260, penalties: 1 },
 ];
 
 export default function IncentivesPage() {
@@ -168,3 +178,5 @@ export default function IncentivesPage() {
     </>
   );
 }
+
+    
