@@ -10,8 +10,11 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Check, X, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { CitizenActions } from '@/components/dashboard/citizen-actions';
+import type { Citizen } from '@/lib/types';
 
-const dummyCitizens = [
+
+const dummyCitizens: Citizen[] = [
   { id: 'CZ001', name: 'Aarav Sharma', ward: 'Ward 5', training: 'Completed', dustbin: true, compost: true, avatar: 'https://picsum.photos/seed/citizen1/40/40' },
   { id: 'CZ002', name: 'Diya Gupta', ward: 'Ward 12', training: 'Not Started', dustbin: false, compost: false, avatar: 'https://picsum.photos/seed/citizen2/40/40' },
   { id: 'CZ003', name: 'Rohan Mehra', ward: 'Ward 8', training: 'In Progress', dustbin: true, compost: false, avatar: 'https://picsum.photos/seed/citizen3/40/40' },
@@ -40,13 +43,13 @@ const dummyCitizens = [
 ];
 
 export default function CitizensPage() {
-  const [citizens] = useState(dummyCitizens);
+  const [citizens, setCitizens] = useState<Citizen[]>(dummyCitizens);
   const [searchTerm, setSearchTerm] = useState('');
   const [wardFilter, setWardFilter] = useState('all');
 
   const wards = useMemo(() => {
     const allWards = new Set(citizens.map(c => c.ward));
-    return ['all', ...Array.from(allWards)];
+    return ['all', ...Array.from(allWards).sort()];
   }, [citizens]);
 
   const filteredCitizens = useMemo(() => {
@@ -68,6 +71,17 @@ export default function CitizensPage() {
       default: return 'outline';
     }
   };
+  
+  const handleUpdateCitizen = (updatedCitizen: Citizen) => {
+    setCitizens(prev => 
+      prev.map(c => c.id === updatedCitizen.id ? updatedCitizen : c)
+    );
+  };
+
+  const handleRemoveCitizen = (citizenId: string) => {
+    setCitizens(prev => prev.filter(c => c.id !== citizenId));
+  };
+
 
   return (
     <>
@@ -113,6 +127,7 @@ export default function CitizensPage() {
                 <TableHead>Training Status</TableHead>
                 <TableHead>Dustbin Issued</TableHead>
                 <TableHead>Compost Kit Issued</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -131,6 +146,13 @@ export default function CitizensPage() {
                    <TableCell>
                     {citizen.compost ? <Check className="w-5 h-5 text-green-600" /> : <X className="w-5 h-5 text-destructive" />}
                   </TableCell>
+                  <TableCell className="text-right">
+                    <CitizenActions 
+                      citizen={citizen}
+                      onUpdate={handleUpdateCitizen}
+                      onRemove={handleRemoveCitizen}
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -145,3 +167,5 @@ export default function CitizensPage() {
     </>
   );
 }
+
+    

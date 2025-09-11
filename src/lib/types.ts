@@ -72,3 +72,15 @@ export type TrainingFeedback = {
     rating: number;
     comment: string;
 };
+
+export type Citizen = {
+  id: string;
+  name: string;
+  ward: string;
+  training: 'Completed' | 'In Progress' | 'Not Started';
+  dustbin: boolean;
+  compost: boolean;
+  avatar: string;
+};
+
+    
