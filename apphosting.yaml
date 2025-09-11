@@ -1,2 +1,5 @@
+# The apphosting.yaml file is used to configure the App Hosting backend.
+# It is not required, but it is recommended.
+# For more information, see https://firebase.google.com/docs/hosting/app-hosting/reference-apphosting-yaml
 runConfig:
   maxInstances: 1

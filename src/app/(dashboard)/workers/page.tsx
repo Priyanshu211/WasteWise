@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { PageHeader } from '@/components/common/page-header';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,13 +20,16 @@ import {
 } from '@/components/ui/table';
 import { PlusCircle, Check, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { workers as initialWorkers } from '@/lib/data';
+import { workers as initialWorkers, complaints as initialComplaints } from '@/lib/data';
 import { WorkerActions } from '@/components/dashboard/worker-actions';
-import type { Worker } from '@/lib/types';
+import type { Worker, Complaint } from '@/lib/types';
 import { Progress } from '@/components/ui/progress';
+import { WorkerOptimizer } from '@/components/dashboard/worker-optimizer';
+import type { OptimizeAssignmentsOutput } from '@/ai/flows/optimize-assignments-flow';
 
 export default function WorkersPage() {
   const [workers, setWorkers] = useState<Worker[]>(initialWorkers);
+  const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
   
   useEffect(() => {
     // Generate dynamic data only on the client-side to avoid hydration errors
@@ -37,6 +40,9 @@ export default function WorkersPage() {
         status: Math.random() > 0.2 ? 'On-Duty' : 'Off-Duty',
     })));
   }, []);
+  
+  const pendingComplaints = useMemo(() => complaints.filter(c => c.status === 'Pending'), [complaints]);
+  const availableWorkers = useMemo(() => workers.filter(w => w.status === 'On-Duty'), [workers]);
 
   const handleUpdateWorker = (updatedWorker: Worker) => {
     setWorkers(prevWorkers => 
@@ -47,7 +53,23 @@ export default function WorkersPage() {
   const handleRemoveWorker = (workerId: string) => {
     setWorkers(prevWorkers => prevWorkers.filter(w => w.workerId !== workerId));
   };
-
+  
+  const handleAssignmentsOptimized = (assignments: OptimizeAssignmentsOutput['assignments']) => {
+    setComplaints(prevComplaints => {
+      const updatedComplaints = [...prevComplaints];
+      assignments.forEach(assignment => {
+        const complaintIndex = updatedComplaints.findIndex(c => c.id === assignment.complaintId);
+        if (complaintIndex !== -1) {
+          updatedComplaints[complaintIndex] = {
+            ...updatedComplaints[complaintIndex],
+            assignedWorker: assignment.workerId,
+            status: 'In Progress',
+          };
+        }
+      });
+      return updatedComplaints;
+    });
+  };
 
   return (
     <>
@@ -60,6 +82,15 @@ export default function WorkersPage() {
           Add Worker
         </Button>
       </PageHeader>
+      
+      <div className="mb-6">
+        <WorkerOptimizer 
+            pendingComplaints={pendingComplaints}
+            availableWorkers={availableWorkers}
+            onAssignmentsOptimized={handleAssignmentsOptimized}
+        />
+      </div>
+
       <Card>
         <CardHeader>
           <CardTitle>Worker Roster</CardTitle>

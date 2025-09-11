@@ -1,5 +1,13 @@
-# NextJS Starter
+# Next.js Application powered by Firebase Studio
 
-This is a NextJS starter project.
+This is a Next.js project created using Firebase Studio.
 
-To get started, take a look at src/app/page.tsx.
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
