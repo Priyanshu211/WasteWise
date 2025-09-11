@@ -1,6 +1,6 @@
 
 
-import { Worker, Complaint, Facility, TrainingProgress, TrainingProgram, TrainingFeedback } from './types';
+import { Worker, Complaint, Facility, TrainingProgress, TrainingProgram, TrainingFeedback, Society } from './types';
 
 export const workers: Worker[] = [
   { workerId: 'W001', name: 'Amit Kumar', area: 'Sector 15, Chandigarh', trainingPhase: 'Completed', tasksCompleted: 128, performance: 92, location: { lat: 30.7333, lng: 76.7794 }, skills: ['Hazardous Waste Handling', 'Recycling Sorting'] },
@@ -328,4 +328,17 @@ export const trainingFeedback: TrainingFeedback[] = [
     { id: 'FB002', name: 'Priya Sharma', avatarUrl: 'https://picsum.photos/seed/user2/40/40', programName: 'Safety Procedures 101', rating: 4, comment: 'Good overview, but could use more real-life examples.' },
     { id: 'FB003', name: 'Rohan Mehra', avatarUrl: 'https://picsum.photos/seed/user8/40/40', programName: 'Community Recycling Education', rating: 5, comment: 'Very helpful! I now know how to sort my recyclables properly.' },
     { id: 'FB004', name: 'Sunita Devi', avatarUrl: 'https://picsum.photos/seed/user4/40/40', programName: 'Vehicle Maintenance Basics', rating: 3, comment: 'The content was a bit too technical for me.' },
+];
+
+export const societies: Society[] = [
+    { id: 'SOC001', name: 'DLF The Crest', ward: 'Ward 5', cleanlinessScore: 98, complaintsResolved: 50, participationRate: 95 },
+    { id: 'SOC002', name: 'Godrej Apartments', ward: 'Ward 2', cleanlinessScore: 95, complaintsResolved: 45, participationRate: 90 },
+    { id: 'SOC003', name: 'Sector 15 RWA', ward: 'Ward 1', cleanlinessScore: 92, complaintsResolved: 40, participationRate: 85 },
+    { id: 'SOC004', name: 'Omaxe Residency', ward: 'Ward 10', cleanlinessScore: 88, complaintsResolved: 35, participationRate: 80 },
+    { id: 'SOC005', name: 'Vasant Vihar Society', ward: 'Ward 7', cleanlinessScore: 85, complaintsResolved: 30, participationRate: 75 },
+    { id: 'SOC006', name: 'Prestige Lakeside Habitat', ward: 'Ward 3', cleanlinessScore: 82, complaintsResolved: 25, participationRate: 70 },
+    { id: 'SOC007', name: 'Chandigarh Coop Society', ward: 'Ward 8', cleanlinessScore: 78, complaintsResolved: 20, participationRate: 65 },
+    { id: 'SOC008', name: 'Delhi Heights', ward: 'Ward 4', cleanlinessScore: 75, complaintsResolved: 15, participationRate: 60 },
+    { id: 'SOC009', name: 'Ansal API', ward: 'Ward 12', cleanlinessScore: 70, complaintsResolved: 10, participationRate: 55 },
+    { id: 'SOC010', name: 'Ireo Grand Arch', ward: 'Ward 9', cleanlinessScore: 65, complaintsResolved: 5, participationRate: 50 },
 ];

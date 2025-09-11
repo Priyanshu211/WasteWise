@@ -87,4 +87,12 @@ export type Citizen = {
   avatar: string;
 };
 
+export type Society = {
+  id: string;
+  name: string;
+  ward: string;
+  cleanlinessScore: number;
+  complaintsResolved: number;
+  participationRate: number;
+}
     

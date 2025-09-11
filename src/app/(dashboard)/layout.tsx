@@ -18,6 +18,7 @@ import {
   ClipboardList,
   Package,
   ShieldAlert,
+  Home,
 } from 'lucide-react';
 
 import {
