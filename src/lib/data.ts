@@ -157,6 +157,38 @@ export const facilities: Facility[] = [
     capacity: '100 TPD',
     status: 'Active',
   },
+   {
+    id: 'F007',
+    name: 'Dada Ramchand Scrap',
+    type: 'Scrap Shop',
+    address: 'Sector 26, Chandigarh',
+    capacity: '80 TPD',
+    status: 'Active',
+  },
+  {
+    id: 'F008',
+    name: 'Delhi Waste Processing',
+    type: 'W-to-E',
+    address: 'Bhalaswa, North Delhi',
+    capacity: '1200 TPD',
+    status: 'Active',
+  },
+   {
+    id: 'F009',
+    name: 'Eco-Wise Biomethanization',
+    type: 'Biomethanization',
+    address: 'Rohini, North West Delhi',
+    capacity: '350 TPD',
+    status: 'Under Maintenance',
+  },
+  {
+    id: 'F010',
+    name: 'GreenCycle Recycling Center',
+    type: 'Recycling Center',
+    address: 'Patparganj, East Delhi',
+    capacity: '250 TPD',
+    status: 'Active',
+  },
 ];
 
 export const complaintsByDay = [
