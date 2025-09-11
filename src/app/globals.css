@@ -27,11 +27,11 @@ body {
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 142.1 76.2% 36.3%;
-    --chart-1: 260 80% 60%; /* Purple */
-    --chart-2: 190 70% 55%; /* Teal */
-    --chart-3: 340 90% 65%; /* Pink */
-    --chart-4: 45 100% 55%; /* Orange */
-    --chart-5: 120 60% 50%; /* Green */
+    --chart-1: 262 80% 50%; /* Vibrant Purple */
+    --chart-2: 160 70% 45%; /* Sea Green */
+    --chart-3: 350 90% 60%; /* Bright Pink */
+    --chart-4: 35 100% 55%; /* Sunny Orange */
+    --chart-5: 195 90% 50%; /* Sky Blue */
     --radius: 0.5rem;
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 222.2 84% 4.9%;
@@ -62,11 +62,11 @@ body {
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 142.1 70.6% 45.3%;
-    --chart-1: 260 80% 60%;
-    --chart-2: 190 70% 55%;
-    --chart-3: 340 90% 65%;
-    --chart-4: 45 100% 55%;
-    --chart-5: 120 60% 50%;
+    --chart-1: 262 80% 58%;
+    --chart-2: 160 70% 50%;
+    --chart-3: 350 90% 65%;
+    --chart-4: 35 100% 60%;
+    --chart-5: 195 90% 55%;
     --sidebar-background: 222.2 84% 4.9%;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 0 0% 98%;
