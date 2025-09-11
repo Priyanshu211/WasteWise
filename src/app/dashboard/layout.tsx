@@ -103,11 +103,9 @@ function DashboardNav() {
                     <SidebarMenuSub>
                        {trainingSubNav.map(subItem => (
                          <SidebarMenuSubItem key={subItem.label}>
-                            <Link href={subItem.href}>
-                                <SidebarMenuSubButton isActive={pathname === subItem.href}>
-                                    {subItem.label}
-                                </SidebarMenuSubButton>
-                            </Link>
+                            <SidebarMenuSubButton asChild isActive={pathname === subItem.href}>
+                                <Link href={subItem.href}>{subItem.label}</Link>
+                            </SidebarMenuSubButton>
                          </SidebarMenuSubItem>
                        ))}
                     </SidebarMenuSub>
