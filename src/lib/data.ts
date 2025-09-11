@@ -294,9 +294,9 @@ export const wasteByZone = [
 ];
   
 export const trainingCompletionRates = [
-    { name: 'Not Started', value: 15, fill: 'var(--color-chart-5)' },
-    { name: 'In Progress', value: 45, fill: 'var(--color-chart-3)' },
-    { name: 'Completed', value: 40, fill: 'var(--color-chart-1)' },
+    { name: 'Not Started', value: 15, fill: 'hsl(var(--chart-5))' },
+    { name: 'In Progress', value: 45, fill: 'hsl(var(--chart-3))' },
+    { name: 'Completed', value: 40, fill: 'hsl(var(--chart-1))' },
 ];
 
 export const facilityUtilization = [
