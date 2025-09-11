@@ -27,7 +27,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { AddEditFacilityDialog } from '@/components/dashboard/add-edit-facility-dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Globe } from '@/components/ui/globe';
 import { cn } from '@/lib/utils';
@@ -82,10 +82,10 @@ export default function FacilitiesPage() {
     setIsAddEditOpen(true);
   }
 
-  const handleSaveFacility = (facilityData: Omit<Facility, 'id'>, id?: string) => {
+  const handleSaveFacility = (facilityData: Omit<Facility, 'id' | 'location'>, id?: string) => {
     if (id) {
       // Update existing facility
-      setFacilities(facilities.map(f => f.id === id ? { ...f, ...facilityData } as Facility : f));
+      setFacilities(facilities.map(f => f.id === id ? { ...f, ...facilityData, location: f.location } as Facility : f));
     } else {
       // Add new facility
       const newFacility: Facility = {
@@ -372,5 +372,3 @@ export default function FacilitiesPage() {
     </>
   );
 }
-
-    
