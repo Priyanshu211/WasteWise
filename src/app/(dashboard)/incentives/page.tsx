@@ -26,6 +26,12 @@ const dummyComplianceData = [
   { id: 'BG012', name: 'Emaar MGF', type: 'Residential', compliance: 72, points: 100, penalties: 2 },
   { id: 'BG013', name: 'Panjab University', type: 'Institutional', compliance: 89, points: 350, penalties: 0 },
   { id: 'BG014', name: 'Fortis Hospital', type: 'Hospital', compliance: 86, points: 290, penalties: 1 },
+  { id: 'BG015', name: 'JW Marriott', type: 'Hotel', compliance: 99, points: 700, penalties: 0 },
+  { id: 'BG016', name: 'Select Citywalk', type: 'Commercial', compliance: 93, points: 480, penalties: 0 },
+  { id: 'BG017', name: 'Ireo Grand Arch', type: 'Residential', compliance: 80, points: 200, penalties: 1 },
+  { id: 'BG018', name: 'Indian School of Business', type: 'Institutional', compliance: 94, points: 520, penalties: 0 },
+  { id: 'BG019', name: 'Apollo Hospital', type: 'Hospital', compliance: 88, points: 320, penalties: 1 },
+  { id: 'BG020', name: 'Ambience Mall', type: 'Commercial', compliance: 81, points: 220, penalties: 2 },
 ];
 
 export default function IncentivesPage() {
