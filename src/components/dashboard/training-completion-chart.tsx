@@ -14,17 +14,16 @@ import type { ChartConfig } from '@/components/ui/chart';
 const chartConfig = {
     'Not Started': {
         label: 'Not Started',
-        color: 'hsl(var(--chart-3))',
     },
     'In Progress': {
         label: 'In Progress',
-        color: 'hsl(var(--chart-4))',
     },
     'Completed': {
         label: 'Completed',
-        color: 'hsl(var(--chart-2))',
     },
 } satisfies ChartConfig;
+
+const COLORS = ['#ef4444', '#f97316', '#22c55e'];
 
 
 export function TrainingCompletionChart() {
@@ -65,8 +64,8 @@ export function TrainingCompletionChart() {
                         );
                     }}
                 >
-                    {trainingCompletionRates.map((entry) => (
-                        <Cell key={`cell-${entry.name}`} fill={`var(--color-${entry.name.replace(/ /g, '-')})`} />
+                    {trainingCompletionRates.map((entry, index) => (
+                        <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
             </PieChart>

@@ -12,12 +12,15 @@ import { wasteByZone } from '@/lib/data';
 import type { ChartConfig } from '@/components/ui/chart';
 
 const chartConfig = {
-    'North Delhi': { label: 'North Delhi', color: 'hsl(var(--chart-1))' },
-    'South Delhi': { label: 'South Delhi', color: 'hsl(var(--chart-2))' },
-    'East Delhi': { label: 'East Delhi', color: 'hsl(var(--chart-3))' },
-    'West Delhi': { label: 'West Delhi', color: 'hsl(var(--chart-4))' },
-    'Chandigarh': { label: 'Chandigarh', color: 'hsl(var(--chart-5))' },
+    'North Delhi': { label: 'North Delhi' },
+    'South Delhi': { label: 'South Delhi' },
+    'East Delhi': { label: 'East Delhi' },
+    'West Delhi': { label: 'West Delhi' },
+    'Chandigarh': { label: 'Chandigarh' },
 } satisfies ChartConfig;
+
+const COLORS = ['#22c55e', '#3b82f6', '#f97316', '#ef4444', '#8b5cf6'];
+
 
 export function WasteByZoneChart() {
   return (
@@ -57,8 +60,8 @@ export function WasteByZoneChart() {
                         );
                     }}
                 >
-                    {wasteByZone.map((entry) => (
-                        <Cell key={`cell-${entry.name}`} fill={`var(--color-${entry.name.replace(/ /g, '-')})`} />
+                    {wasteByZone.map((entry, index) => (
+                        <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
             </PieChart>
