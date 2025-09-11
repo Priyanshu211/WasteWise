@@ -252,7 +252,7 @@ export default function FacilitiesPage() {
                 <CardContent>
                     <div className="bg-muted rounded-lg h-96 w-full relative">
                         <Image
-                            src="https://i.imgur.com/r5V1SRA.png"
+                            src="/image.png"
                             alt="Static map of Delhi with facilities marked"
                             layout="fill"
                             objectFit="cover"
