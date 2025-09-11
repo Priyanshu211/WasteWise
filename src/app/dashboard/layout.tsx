@@ -47,7 +47,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { ComplaintsProvider, useComplaints } from '@/context/ComplaintsContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function DashboardNav() {
   const pathname = usePathname();
@@ -80,7 +80,17 @@ function DashboardNav() {
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
             <Trash2 className="w-7 h-7 text-primary" />
-            <span className="text-xl font-semibold font-headline">WasteWise</span>
+            <AnimatePresence>
+            <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="text-xl font-semibold font-headline"
+            >
+                WasteWise
+            </motion.div>
+            </AnimatePresence>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -124,6 +134,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   return (
     <SidebarProvider>
       <ComplaintsProvider>
@@ -169,15 +180,18 @@ export default function DashboardLayout({
                 </DropdownMenuContent>
             </DropdownMenu>
             </header>
-            <motion.main
-              key={usePathname()}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex-1 p-4 sm:p-6"
-            >
-              {children}
-            </motion.main>
+            <AnimatePresence mode="wait">
+              <motion.main
+                key={pathname}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="flex-1 p-4 sm:p-6"
+              >
+                {children}
+              </motion.main>
+            </AnimatePresence>
         </SidebarInset>
       </ComplaintsProvider>
     </SidebarProvider>
