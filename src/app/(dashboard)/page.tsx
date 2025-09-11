@@ -74,7 +74,7 @@ export default function DashboardPage() {
         description="Here's a snapshot of the waste management system."
       />
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:grid-flow-col lg:auto-cols-fr mb-6">
         <KpiCard
           title="Open Complaints"
           value={openComplaints.toString()}
