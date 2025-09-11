@@ -1,5 +1,4 @@
 
-
 import { Worker, Complaint, Facility, TrainingProgress, TrainingProgram, TrainingFeedback, Society } from './types';
 
 export const workers: Worker[] = [
