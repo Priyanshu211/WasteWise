@@ -80,6 +80,7 @@ export default function ComplaintsPage() {
                                 src={complaint.imageUrl}
                                 alt="Complaint image"
                                 className='object-cover'
+                                unoptimized
                             />
                             <AvatarFallback>IMG</AvatarFallback>
                         </Avatar>
