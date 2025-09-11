@@ -29,6 +29,7 @@ import Image from 'next/image';
 import { AddEditFacilityDialog } from '@/components/dashboard/add-edit-facility-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
+import { Globe } from '@/components/ui/globe';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -82,12 +83,13 @@ export default function FacilitiesPage() {
   const handleSaveFacility = (facilityData: Omit<Facility, 'id'>, id?: string) => {
     if (id) {
       // Update existing facility
-      setFacilities(facilities.map(f => f.id === id ? { ...f, ...facilityData } : f));
+      setFacilities(facilities.map(f => f.id === id ? { ...f, ...facilityData } as Facility : f));
     } else {
       // Add new facility
       const newFacility: Facility = {
         id: `F${Date.now().toString().slice(-4)}`, // Simple unique ID generation
-        ...facilityData
+        ...facilityData,
+        location: { lat: 28.6139, lng: 77.2090 }, // Default to Delhi for new facilities
       };
       setFacilities([newFacility, ...facilities]);
     }
@@ -116,6 +118,36 @@ export default function FacilitiesPage() {
       default: return 'destructive';
     }
   };
+
+  const globeConfig = {
+    pointSize: 4,
+    globeColor: "#1d222d",
+    showAtmosphere: true,
+    atmosphereColor: "#ffffff",
+    atmosphereAltitude: 0.1,
+    emissive: "#000000",
+    emissiveIntensity: 0.1,
+    shininess: 0.9,
+    polygonColor: "rgba(255,255,255,0.7)",
+    ambientLight: "#38bdf8",
+    directionalLeftLight: "#ffffff",
+    directionalTopLight: "#ffffff",
+    pointLight: "#ffffff",
+    arcTime: 1000,
+    arcLength: 0.9,
+    rings: 1,
+    maxRings: 3,
+    initialPosition: { lat: 20.5937, lng: 78.9629 }, // Center of India
+    initialZoom: 1.5,
+  };
+
+  const globeData = useMemo(() => {
+    return facilities.map(f => ({
+        location: [f.location.lat, f.location.lng],
+        size: 0.05,
+    }));
+  }, [facilities]);
+
 
   return (
     <>
@@ -246,17 +278,14 @@ export default function FacilitiesPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>Facilities Map</CardTitle>
-                    <CardDescription>Geographical distribution of all facilities.</CardDescription>
+                    <CardDescription>Geographical distribution of all facilities across India.</CardDescription>
                 </CardHeader>
-                <CardContent>
-                    <div className="bg-muted rounded-lg h-96 flex flex-col items-center justify-center text-center p-8">
-                         <div className="mx-auto bg-background rounded-full p-4">
-                            <Map className="w-12 h-12 text-muted-foreground" />
-                        </div>
-                        <h3 className="mt-4 text-lg font-semibold">Interactive Map Coming Soon</h3>
-                        <p className="text-muted-foreground mt-2 max-w-md">
-                            This area will display an interactive map with facility locations.
-                        </p>
+                <CardContent className="p-0">
+                    <div className="relative h-[600px] w-full">
+                        <Globe
+                            globeConfig={globeConfig}
+                            data={globeData}
+                        />
                     </div>
                 </CardContent>
             </Card>

@@ -40,6 +40,10 @@ export type Facility = {
   address: string;
   capacity: string;
   status: 'Active' | 'Under Maintenance';
+  location: {
+    lat: number;
+    lng: number;
+  };
 };
 
 export type TrainingProgress = {

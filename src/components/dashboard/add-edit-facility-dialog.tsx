@@ -34,6 +34,10 @@ const facilitySchema = z.object({
   address: z.string().min(10, { message: 'Address must be at least 10 characters.' }),
   capacity: z.string().min(1, { message: 'Capacity is required.' }),
   status: z.enum(['Active', 'Under Maintenance']),
+  location: z.object({
+    lat: z.number(),
+    lng: z.number(),
+  }),
 });
 
 type FacilityFormValues = z.infer<typeof facilitySchema>;
@@ -42,7 +46,7 @@ type AddEditFacilityDialogProps = {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   facility?: Facility;
-  onSave: (data: FacilityFormValues, id?: string) => void;
+  onSave: (data: Omit<Facility, 'id'>, id?: string) => void;
 };
 
 export function AddEditFacilityDialog({ isOpen, onOpenChange, facility, onSave }: AddEditFacilityDialogProps) {
@@ -56,6 +60,7 @@ export function AddEditFacilityDialog({ isOpen, onOpenChange, facility, onSave }
       address: '',
       capacity: '',
       status: 'Active',
+      location: { lat: 28.6139, lng: 77.2090 },
     },
   });
 
@@ -69,6 +74,7 @@ export function AddEditFacilityDialog({ isOpen, onOpenChange, facility, onSave }
         address: '',
         capacity: '',
         status: 'Active',
+        location: { lat: 28.6139, lng: 77.2090 },
       });
     }
   }, [facility, form]);

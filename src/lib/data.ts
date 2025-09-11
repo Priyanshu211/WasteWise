@@ -116,6 +116,7 @@ export const facilities: Facility[] = [
     address: 'Okhla Industrial Area, New Delhi',
     capacity: '2000 TPD',
     status: 'Active',
+    location: { lat: 28.5559, lng: 77.2847 },
   },
   {
     id: 'F002',
@@ -124,6 +125,7 @@ export const facilities: Facility[] = [
     address: 'Ghazipur, East Delhi',
     capacity: '500 TPD',
     status: 'Active',
+    location: { lat: 28.6246, lng: 77.3331 },
   },
   {
     id: 'F003',
@@ -132,6 +134,7 @@ export const facilities: Facility[] = [
     address: 'Industrial Area Phase 1, Chandigarh',
     capacity: '300 TPD',
     status: 'Under Maintenance',
+    location: { lat: 30.7143, lng: 76.8021 },
   },
     {
     id: 'F004',
@@ -140,6 +143,7 @@ export const facilities: Facility[] = [
     address: 'Narela, North Delhi',
     capacity: '1500 TPD',
     status: 'Active',
+    location: { lat: 28.8510, lng: 77.0984 },
   },
   {
     id: 'F005',
@@ -148,6 +152,7 @@ export const facilities: Facility[] = [
     address: 'Bawana Industrial Area, North West Delhi',
     capacity: '400 TPD',
     status: 'Active',
+    location: { lat: 28.8021, lng: 77.0494 },
   },
   {
     id: 'F006',
@@ -156,6 +161,7 @@ export const facilities: Facility[] = [
     address: 'Mayapuri, West Delhi',
     capacity: '100 TPD',
     status: 'Active',
+    location: { lat: 28.6468, lng: 77.1265 },
   },
    {
     id: 'F007',
@@ -164,6 +170,7 @@ export const facilities: Facility[] = [
     address: 'Sector 26, Chandigarh',
     capacity: '80 TPD',
     status: 'Active',
+    location: { lat: 30.7253, lng: 76.8041 },
   },
   {
     id: 'F008',
@@ -172,6 +179,7 @@ export const facilities: Facility[] = [
     address: 'Bhalaswa, North Delhi',
     capacity: '1200 TPD',
     status: 'Active',
+    location: { lat: 28.7238, lng: 77.1684 },
   },
    {
     id: 'F009',
@@ -180,6 +188,7 @@ export const facilities: Facility[] = [
     address: 'Rohini, North West Delhi',
     capacity: '350 TPD',
     status: 'Under Maintenance',
+    location: { lat: 28.7041, lng: 77.1025 },
   },
   {
     id: 'F010',
@@ -188,6 +197,7 @@ export const facilities: Facility[] = [
     address: 'Patparganj, East Delhi',
     capacity: '250 TPD',
     status: 'Active',
+    location: { lat: 28.6256, lng: 77.2934 },
   },
 ];
 
