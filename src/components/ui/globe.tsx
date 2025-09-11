@@ -5,6 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Point, PointMaterial, Points } from "@react-three/drei";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
+import ThreeGlobe from "three-globe";
 
 const Globe = ({
   className,
@@ -41,15 +42,18 @@ const Globe = ({
   } = globeConfig;
 
   let numbers = [];
-  for (let i = 0; i < data.length; i++) {
-    let arcs = data[i].arcs;
-    for (let j = 0; j < arcs.length; j++) {
-      let arc = arcs[j];
-      if (arc.order > numbers.length) {
-        numbers.push(arc.order);
-      }
+  if(data && data.length > 0 && data[0].arcs) {
+    for (let i = 0; i < data.length; i++) {
+        let arcs = data[i].arcs;
+        for (let j = 0; j < arcs.length; j++) {
+        let arc = arcs[j];
+        if (arc.order > numbers.length) {
+            numbers.push(arc.order);
+        }
+        }
     }
   }
+
 
   useEffect(() => {
     if (globe) {
@@ -118,15 +122,6 @@ const World = ({
   globeRef: any;
 }) => {
   const { initialPosition } = globeConfig;
-
-  const [ThreeGlobe, setThreeGlobe] = useState<any>(null);
-
-  useEffect(() => {
-    import("three-globe").then((module) => {
-      setThreeGlobe(() => module.default);
-    });
-  }, []);
-
   const ref = useRef<any>(null);
 
   useEffect(() => {
@@ -142,9 +137,6 @@ const World = ({
     }
   }, [ref.current, initialPosition]);
 
-  if (!ThreeGlobe) {
-    return null;
-  }
   return <ThreeGlobe ref={(globe: any) => { ref.current = globe; globeRef(globe); }} pointsData={data} />;
 };
 
