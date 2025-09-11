@@ -57,7 +57,7 @@ export default function FacilitiesPage() {
       })
       .filter(facility => {
         if (statusFilter === 'all') return true;
-        return facility.status === statusFilter;
+        return facility.status === facility.status;
       });
   }, [facilities, typeFilter, statusFilter]);
 
@@ -252,8 +252,8 @@ export default function FacilitiesPage() {
                 <CardContent>
                     <div className="bg-muted rounded-lg h-96 w-full relative">
                         <Image
-                            src="https://i.imgur.com/r5V1SRA.png"
-                            alt="Static map of Delhi with facilities marked"
+                            src="/image.png"
+                            alt="Map of Delhi with facilities marked"
                             layout="fill"
                             objectFit="cover"
                             className="rounded-lg"
