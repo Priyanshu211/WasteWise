@@ -252,12 +252,11 @@ export default function FacilitiesPage() {
                 <CardContent>
                     <div className="bg-muted rounded-lg h-96 w-full relative">
                         <Image
-                            src="https://picsum.photos/seed/delhi-map/1200/800"
+                            src="/image.png"
                             alt="Static map of Delhi with facilities marked"
                             layout="fill"
                             objectFit="cover"
                             className="rounded-lg"
-                            data-ai-hint="delhi map"
                         />
                     </div>
                 </CardContent>
