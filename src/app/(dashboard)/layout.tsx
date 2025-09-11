@@ -52,7 +52,7 @@ import { useComplaints } from '@/context/ComplaintsContext';
 function DashboardNav() {
   const pathname = usePathname();
   const { complaints } = useComplaints();
-  const isActive = (href: string) => pathname.startsWith(href) && (href !== '/' || pathname === '/');
+  const isActive = (href: string) => pathname === href || (pathname.startsWith(href) && href !== '/');
   const pendingComplaintsCount = complaints.filter(c => c.status === 'Pending').length;
 
   const navItems = [
@@ -80,7 +80,7 @@ function DashboardNav() {
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
             <Trash2 className="w-7 h-7 text-primary" />
-            <span className="text-xl font-semibold font-headline">WasteWise</span>
+            <span className="text-xl font-semibold font-headline">Swachh Soochak</span>
           </div>
         </SidebarHeader>
         <SidebarContent>
