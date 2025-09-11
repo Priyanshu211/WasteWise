@@ -352,7 +352,3 @@ export const societies: Society[] = [
     { id: 'SOC014', name: 'M3M Golf Estate', ward: 'Ward 13', cleanlinessScore: 99, complaintsResolved: 55, participationRate: 98 },
     { id: 'SOC015', name: 'Emaar Marbella', ward: 'Ward 15', cleanlinessScore: 96, complaintsResolved: 49, participationRate: 93 },
 ];
-
-    
-
-    
