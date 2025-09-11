@@ -255,7 +255,7 @@ export default function FacilitiesPage() {
                             src="/image.png"
                             alt="Map of Delhi with facilities marked"
                             layout="fill"
-                            objectFit="cover"
+                            objectFit="contain"
                             className="rounded-lg"
                         />
                     </div>
@@ -341,5 +341,3 @@ export default function FacilitiesPage() {
     </>
   );
 }
-
-    
