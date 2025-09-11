@@ -250,15 +250,15 @@ export default function FacilitiesPage() {
                     <CardDescription>Geographical distribution of all facilities.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="bg-muted rounded-lg h-96 w-full relative">
-                        <Image
-                            src="/image.png"
-                            alt="Map of Delhi with facilities marked"
-                            layout="fill"
-                            objectFit="contain"
-                            className="rounded-lg"
-                        />
-                    </div>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224346.5400523454!2d77.06889754767417!3d28.5272527364343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1673871686454!5m2!1sen!2sin"
+                        className="w-full h-96 rounded-lg"
+                        style={{ border: 0 }}
+                        allowFullScreen={true}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Google Map of Delhi"
+                    ></iframe>
                 </CardContent>
             </Card>
         </TabsContent>
