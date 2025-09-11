@@ -261,6 +261,15 @@ export default function FacilitiesPage() {
                         title="Google Map of Chandigarh"
                       ></iframe>
                     </div>
+                     <div className="relative h-96 w-full rounded-lg overflow-hidden">
+                        <Image
+                            src="/image.png"
+                            alt="Custom map with facilities"
+                            layout="fill"
+                            objectFit="contain"
+                            unoptimized
+                        />
+                    </div>
                 </CardContent>
             </Card>
         </TabsContent>
@@ -344,4 +353,3 @@ export default function FacilitiesPage() {
   );
 }
 
-    
