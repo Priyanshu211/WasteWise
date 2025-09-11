@@ -18,6 +18,14 @@ const dummyComplianceData = [
   { id: 'BG004', name: 'The Oberoi Sukhvilas', type: 'Hotel', compliance: 98, points: 600, penalties: 0 },
   { id: 'BG005', name: 'Godrej Apartments', type: 'Residential', compliance: 65, points: 50, penalties: 3 },
   { id: 'BG006', name: 'Delhi Public School', type: 'Institutional', compliance: 88, points: 300, penalties: 0 },
+  { id: 'BG007', name: 'Taj Hotel, Chandigarh', type: 'Hotel', compliance: 92, points: 450, penalties: 0 },
+  { id: 'BG008', name: 'Infosys Campus', type: 'Commercial', compliance: 91, points: 400, penalties: 0 },
+  { id: 'BG009', name: 'Max Hospital', type: 'Hospital', compliance: 85, points: 280, penalties: 1 },
+  { id: 'BG010', name: 'Phoenix Palassio', type: 'Commercial', compliance: 78, points: 180, penalties: 2 },
+  { id: 'BG011', name: 'Hyatt Regency', type: 'Hotel', compliance: 96, points: 550, penalties: 0 },
+  { id: 'BG012', name: 'Emaar MGF', type: 'Residential', compliance: 72, points: 100, penalties: 2 },
+  { id: 'BG013', name: 'Panjab University', type: 'Institutional', compliance: 89, points: 350, penalties: 0 },
+  { id: 'BG014', name: 'Fortis Hospital', type: 'Hospital', compliance: 86, points: 290, penalties: 1 },
 ];
 
 export default function IncentivesPage() {
