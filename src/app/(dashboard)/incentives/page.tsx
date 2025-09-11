@@ -42,6 +42,16 @@ const dummyComplianceData = [
   { id: 'BG028', name: 'Medanta - The Medicity', type: 'Hospital', compliance: 91, points: 420, penalties: 0 },
   { id: 'BG029', name: 'IIT Delhi', type: 'Institutional', compliance: 93, points: 490, penalties: 0 },
   { id: 'BG030', name: 'Sobha City', type: 'Residential', compliance: 83, points: 260, penalties: 1 },
+  { id: 'BG031', name: 'Radisson Blu Plaza', type: 'Hotel', compliance: 94, points: 510, penalties: 0 },
+  { id: 'BG032', name: 'Pacific Mall', type: 'Commercial', compliance: 85, points: 290, penalties: 1 },
+  { id: 'BG033', name: 'Vatika City', type: 'Residential', compliance: 79, points: 190, penalties: 2 },
+  { id: 'BG034', name: 'Amity University', type: 'Institutional', compliance: 90, points: 390, penalties: 0 },
+  { id: 'BG035', name: 'Artemis Hospital', type: 'Hospital', compliance: 87, points: 310, penalties: 1 },
+  { id: 'BG036', name: 'The Grand Vasant Kunj', type: 'Hotel', compliance: 96, points: 580, penalties: 0 },
+  { id: 'BG037', name: 'Logix City Center', type: 'Commercial', compliance: 88, points: 340, penalties: 1 },
+  { id: 'BG038', name: 'Jaypee Greens', type: 'Residential', compliance: 82, points: 240, penalties: 1 },
+  { id: 'BG039', name: 'Shiv Nadar University', type: 'Institutional', compliance: 91, points: 430, penalties: 0 },
+  { id: 'BG040', name: 'Columbia Asia Hospital', type: 'Hospital', compliance: 89, points: 370, penalties: 1 },
 ];
 
 export default function IncentivesPage() {
