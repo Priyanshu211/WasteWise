@@ -286,11 +286,11 @@ export const complaintsByMonth = [
 ];
   
 export const wasteByZone = [
-    { name: 'North Delhi', value: 400, fill: 'var(--color-chart-1)' },
-    { name: 'South Delhi', value: 300, fill: 'var(--color-chart-2)' },
-    { name: 'East Delhi', value: 200, fill: 'var(--color-chart-3)' },
-    { name: 'West Delhi', value: 278, fill: 'var(--color-chart-4)' },
-    { name: 'Chandigarh', value: 189, fill: 'var(--color-chart-5)' },
+    { name: 'North Delhi', value: 400 },
+    { name: 'South Delhi', value: 300 },
+    { name: 'East Delhi', value: 200 },
+    { name: 'West Delhi', value: 278 },
+    { name: 'Chandigarh', value: 189 },
 ];
   
 export const trainingCompletionRates = [
@@ -346,4 +346,3 @@ export const societies: Society[] = [
     { id: 'SOC014', name: 'M3M Golf Estate', ward: 'Ward 13', cleanlinessScore: 99, complaintsResolved: 55, participationRate: 98 },
     { id: 'SOC015', name: 'Emaar Marbella', ward: 'Ward 15', cleanlinessScore: 96, complaintsResolved: 49, participationRate: 93 },
 ];
-

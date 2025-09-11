@@ -57,8 +57,8 @@ export function WasteByZoneChart() {
                         );
                     }}
                 >
-                    {wasteByZone.map((entry) => (
-                        <Cell key={`cell-${entry.name}`} fill={entry.fill} />
+                    {wasteByZone.map((entry, index) => (
+                        <Cell key={`cell-${entry.name}`} fill={`var(--color-${entry.name.replace(/ /g, '-')})`} />
                     ))}
                 </Pie>
             </PieChart>
