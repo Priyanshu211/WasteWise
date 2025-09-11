@@ -27,10 +27,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { AddEditFacilityDialog } from '@/components/dashboard/add-edit-facility-dialog';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Globe } from '@/components/ui/globe';
-import { cn } from '@/lib/utils';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -44,7 +42,6 @@ export default function FacilitiesPage() {
   const [editingFacility, setEditingFacility] = useState<Facility | undefined>(undefined);
   const [exportType, setExportType] = useState('all');
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState('list');
 
 
   const facilityTypes = useMemo(() => {
@@ -121,37 +118,6 @@ export default function FacilitiesPage() {
     }
   };
 
-  const globeConfig = {
-    pointSize: 4,
-    globeColor: "#1d222d",
-    showAtmosphere: true,
-    atmosphereColor: "#ffffff",
-    atmosphereAltitude: 0.1,
-    emissive: "#000000",
-    emissiveIntensity: 0.1,
-    shininess: 0.9,
-    polygonColor: "rgba(255,255,255,0.7)",
-    ambientLight: "#38bdf8",
-    directionalLeftLight: "#ffffff",
-    directionalTopLight: "#ffffff",
-    pointLight: "#ffffff",
-    arcTime: 1000,
-    arcLength: 0.9,
-    rings: 1,
-    maxRings: 3,
-    initialPosition: { lat: 20.5937, lng: 78.9629 }, // Center of India
-    initialZoom: 1.5,
-  };
-
-  const globeData = useMemo(() => {
-    return facilities.map(f => ({
-        location: [f.location.lat, f.location.lng],
-        size: 0.05,
-        name: f.name,
-    }));
-  }, [facilities]);
-
-
   return (
     <>
       <PageHeader
@@ -164,7 +130,7 @@ export default function FacilitiesPage() {
         </Button>
       </PageHeader>
       
-      <Tabs defaultValue="list" onValueChange={setActiveTab}>
+      <Tabs defaultValue="list">
         <div className="flex justify-between items-center mb-4">
             <TabsList>
             <TabsTrigger value="list"><List className="mr-2 h-4 w-4" />List View</TabsTrigger>
@@ -204,7 +170,7 @@ export default function FacilitiesPage() {
             </div>
         </div>
 
-        <div className={cn(activeTab !== 'list' && 'hidden')}>
+        <TabsContent value="list">
             <Card>
                 <CardHeader>
                 <CardTitle>Facility List</CardTitle>
@@ -276,23 +242,27 @@ export default function FacilitiesPage() {
                     )}
                 </CardContent>
             </Card>
-        </div>
-        <div className={cn(activeTab !== 'map' && 'hidden')}>
+        </TabsContent>
+        <TabsContent value="map">
             <Card>
                 <CardHeader>
                     <CardTitle>Facilities Map</CardTitle>
-                    <CardDescription>Geographical distribution of all facilities across India.</CardDescription>
+                    <CardDescription>Geographical distribution of all facilities.</CardDescription>
                 </CardHeader>
-                <CardContent className="p-0">
-                    <div className="relative h-[600px] w-full">
-                        <Globe
-                            globeConfig={globeConfig}
-                            data={globeData}
+                <CardContent>
+                    <div className="bg-muted rounded-lg h-96 w-full relative">
+                        <Image
+                            src="https://placehold.co/1200x800/e2e8f0/64748b?text=Map+of+Delhi\n(Facilities+Marked)"
+                            alt="Map of Delhi with facilities marked"
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded-lg"
+                            data-ai-hint="delhi map"
                         />
                     </div>
                 </CardContent>
             </Card>
-        </div>
+        </TabsContent>
       </Tabs>
       
       <Card className="mt-6">
@@ -372,3 +342,5 @@ export default function FacilitiesPage() {
     </>
   );
 }
+
+    
