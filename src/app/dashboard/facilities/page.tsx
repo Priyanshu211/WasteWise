@@ -265,6 +265,7 @@ export default function FacilitiesPage() {
                         alt="Custom map with facilities"
                         layout="fill"
                         objectFit="contain"
+                        unoptimized
                       />
                     </div>
                 </CardContent>
@@ -349,5 +350,3 @@ export default function FacilitiesPage() {
     </>
   );
 }
-
-    
