@@ -340,4 +340,10 @@ export const societies: Society[] = [
     { id: 'SOC008', name: 'Delhi Heights', ward: 'Ward 4', cleanlinessScore: 75, complaintsResolved: 15, participationRate: 60 },
     { id: 'SOC009', name: 'Ansal API', ward: 'Ward 12', cleanlinessScore: 70, complaintsResolved: 10, participationRate: 55 },
     { id: 'SOC010', name: 'Ireo Grand Arch', ward: 'Ward 9', cleanlinessScore: 65, complaintsResolved: 5, participationRate: 50 },
+    { id: 'SOC011', name: 'ATS Greens', ward: 'Ward 6', cleanlinessScore: 94, complaintsResolved: 48, participationRate: 92 },
+    { id: 'SOC012', name: 'Unitech World Spa', ward: 'Ward 11', cleanlinessScore: 91, complaintsResolved: 42, participationRate: 88 },
+    { id: 'SOC013', name: 'Tata Primanti', ward: 'Ward 14', cleanlinessScore: 89, complaintsResolved: 38, participationRate: 84 },
+    { id: 'SOC014', name: 'M3M Golf Estate', ward: 'Ward 13', cleanlinessScore: 99, complaintsResolved: 55, participationRate: 98 },
+    { id: 'SOC015', name: 'Emaar Marbella', ward: 'Ward 15', cleanlinessScore: 96, complaintsResolved: 49, participationRate: 93 },
 ];
+
