@@ -30,6 +30,7 @@ import { AddEditFacilityDialog } from '@/components/dashboard/add-edit-facility-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Globe } from '@/components/ui/globe';
+import { cn } from '@/lib/utils';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -43,6 +44,7 @@ export default function FacilitiesPage() {
   const [editingFacility, setEditingFacility] = useState<Facility | undefined>(undefined);
   const [exportType, setExportType] = useState('all');
   const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState('list');
 
 
   const facilityTypes = useMemo(() => {
@@ -145,6 +147,7 @@ export default function FacilitiesPage() {
     return facilities.map(f => ({
         location: [f.location.lat, f.location.lng],
         size: 0.05,
+        name: f.name,
     }));
   }, [facilities]);
 
@@ -161,7 +164,7 @@ export default function FacilitiesPage() {
         </Button>
       </PageHeader>
       
-      <Tabs defaultValue="list">
+      <Tabs defaultValue="list" onValueChange={setActiveTab}>
         <div className="flex justify-between items-center mb-4">
             <TabsList>
             <TabsTrigger value="list"><List className="mr-2 h-4 w-4" />List View</TabsTrigger>
@@ -201,7 +204,7 @@ export default function FacilitiesPage() {
             </div>
         </div>
 
-        <TabsContent value="list">
+        <div className={cn(activeTab !== 'list' && 'hidden')}>
             <Card>
                 <CardHeader>
                 <CardTitle>Facility List</CardTitle>
@@ -273,8 +276,8 @@ export default function FacilitiesPage() {
                     )}
                 </CardContent>
             </Card>
-        </TabsContent>
-        <TabsContent value="map">
+        </div>
+        <div className={cn(activeTab !== 'map' && 'hidden')}>
             <Card>
                 <CardHeader>
                     <CardTitle>Facilities Map</CardTitle>
@@ -289,7 +292,7 @@ export default function FacilitiesPage() {
                     </div>
                 </CardContent>
             </Card>
-        </TabsContent>
+        </div>
       </Tabs>
       
       <Card className="mt-6">
