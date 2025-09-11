@@ -46,7 +46,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { useComplaints } from '@/context/ComplaintsContext';
+import { ComplaintsProvider, useComplaints } from '@/context/ComplaintsContext';
 
 function DashboardNav() {
   const pathname = usePathname();
