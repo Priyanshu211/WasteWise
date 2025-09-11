@@ -11,7 +11,6 @@ import {
   LineChart,
   Search,
   Settings,
-  Trash2,
   Trophy,
   Users,
   PanelLeft,
@@ -48,6 +47,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { useComplaints } from '@/context/ComplaintsContext';
+import { Logo } from '@/components/common/logo';
 
 function DashboardNav() {
   const pathname = usePathname();
@@ -79,7 +79,7 @@ function DashboardNav() {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
-            <Trash2 className="w-7 h-7 text-primary" />
+            <Logo />
             <span className="text-xl font-semibold font-headline">Swachh Soochak</span>
           </div>
         </SidebarHeader>

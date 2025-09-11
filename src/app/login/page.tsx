@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { Logo } from '@/components/common/logo';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function LoginPage() {
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
              <div className="flex items-center justify-center gap-2 mb-4">
-                <Trash2 className="h-8 w-8 text-primary" />
+                <Logo />
                 <h1 className="text-3xl font-bold font-headline">Swachh Soochak</h1>
             </div>
             <p className="text-balance text-muted-foreground">

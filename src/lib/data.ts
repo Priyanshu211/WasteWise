@@ -109,7 +109,7 @@ const initialComplaints: Omit<Complaint, 'imageUrl'>[] = [
 
 export const complaints: Complaint[] = initialComplaints.map(c => ({
     ...c,
-    imageUrl: `/waste/waste${Math.floor(Math.random() * 10) + 1}.jpg`
+    imageUrl: `/waste/${Math.floor(Math.random() * 10) + 1}.jpg`
 }));
 
 
