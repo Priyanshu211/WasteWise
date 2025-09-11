@@ -5,7 +5,6 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
 import { PanelLeft } from "lucide-react"
-import { motion } from 'framer-motion'
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -551,7 +550,6 @@ const SidebarMenuButton = React.forwardRef<
       size = "default",
       tooltip,
       className,
-      children,
       ...props
     },
     ref
@@ -560,30 +558,18 @@ const SidebarMenuButton = React.forwardRef<
     const { isMobile, state } = useSidebar()
 
     const button = (
-        <Comp
-          ref={ref}
-          data-sidebar="menu-button"
-          data-size={size}
-          data-active={isActive}
-          className={cn(sidebarMenuButtonVariants({ variant, size }), "relative", className)}
-          {...props}
-        >
-        {isActive && (
-            <motion.div
-                layoutId="sidebar-active-indicator"
-                className="absolute left-0 top-0 h-full w-1 bg-primary rounded-r-full" 
-            />
+      <Comp
+        ref={ref}
+        data-sidebar="menu-button"
+        data-size={size}
+        data-active={isActive}
+        className={cn(
+          sidebarMenuButtonVariants({ variant, size }),
+          "group-data-[collapsible=icon]:justify-start",
+          className
         )}
-        {children}
-        <motion.span 
-          className="truncate"
-          initial={{ opacity: 0, width: 0 }}
-          animate={{ opacity: state === 'expanded' ? 1 : 0, width: state === 'expanded' ? 'auto' : 0 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-        >
-          {React.Children.toArray(props.children).find(c => typeof c === 'string')}
-        </motion.span>
-      </Comp>
+        {...props}
+      />
     )
 
     if (!tooltip) {

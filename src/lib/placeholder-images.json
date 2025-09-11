@@ -1,10 +1,9 @@
-{
-  "placeholderImages": [
+
+[
     {
       "id": "login-image",
       "description": "An eco-friendly and modern illustration for the login page.",
       "imageUrl": "https://picsum.photos/seed/wastewise-login/1080/1920",
       "imageHint": "eco friendly illustration"
     }
-  ]
-}
+]

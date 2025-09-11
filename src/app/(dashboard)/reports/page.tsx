@@ -392,5 +392,3 @@ export default function ReportsPage() {
     </>
   );
 }
-
-    
