@@ -40,6 +40,7 @@ import { TrainingCompletionChart } from '@/components/dashboard/training-complet
 import { FacilityUtilizationChart } from '@/components/dashboard/facility-utilization-chart';
 import { useComplaints } from '@/context/ComplaintsContext';
 import { useMemo } from 'react';
+import { motion } from 'framer-motion';
 
 export default function DashboardPage() {
     const { complaints } = useComplaints();
@@ -67,6 +68,26 @@ export default function DashboardPage() {
     const averageFacilityUtilization = 76;
 
 
+  const containerVariants = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
+
   return (
     <>
       <PageHeader
@@ -74,29 +95,42 @@ export default function DashboardPage() {
         description="Here's a snapshot of the waste management system."
       />
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
-        <KpiCard
-          title="Open Complaints"
-          value={openComplaints.toString()}
-          icon={AlertCircle}
-          change={`${resolvedComplaints} resolved`}
-        />
-        <KpiCard
-          title="Citizens Trained"
-          value={citizensTrained.toString()}
-          icon={GraduationCap}
-        />
-        <KpiCard
-          title="Waste Workers Trained"
-          value={workersTrained.toString()}
-          icon={Users}
-        />
-        <KpiCard
-          title="Facility Utilization"
-          value={`${averageFacilityUtilization}%`}
-          icon={Percent}
-        />
-      </div>
+      <motion.div 
+        className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants}>
+            <KpiCard
+            title="Open Complaints"
+            value={openComplaints.toString()}
+            icon={AlertCircle}
+            change={`${resolvedComplaints} resolved`}
+            />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+            <KpiCard
+            title="Citizens Trained"
+            value={citizensTrained.toString()}
+            icon={GraduationCap}
+            />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+            <KpiCard
+            title="Waste Workers Trained"
+            value={workersTrained.toString()}
+            icon={Users}
+            />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+            <KpiCard
+            title="Facility Utilization"
+            value={`${averageFacilityUtilization}%`}
+            icon={Percent}
+            />
+        </motion.div>
+      </motion.div>
 
       <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3 mb-6">
         <Card className="xl:col-span-2">

@@ -47,6 +47,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { ComplaintsProvider, useComplaints } from '@/context/ComplaintsContext';
+import { motion } from 'framer-motion';
 
 function DashboardNav() {
   const pathname = usePathname();
@@ -168,7 +169,15 @@ export default function DashboardLayout({
                 </DropdownMenuContent>
             </DropdownMenu>
             </header>
-            <main className="flex-1 p-4 sm:p-6">{children}</main>
+            <motion.main
+              key={usePathname()}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex-1 p-4 sm:p-6"
+            >
+              {children}
+            </motion.main>
         </SidebarInset>
       </ComplaintsProvider>
     </SidebarProvider>

@@ -86,3 +86,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .card {
+    @apply shadow-sm transition-all duration-300;
+  }
+  .card:hover {
+    @apply shadow-md;
+  }
+}
